@@ -9,7 +9,7 @@ import { randomUUID } from 'node:crypto';
 import { chat as llmChat, type LlmMessage } from '@/lib/connectors/llm';
 import { ambientPack } from '@/lib/agents/ambient';
 import { sharedChatTools } from '@/lib/agents/brain-tool';
-import type { FounderDb } from '@/lib/db';
+import type { LEODb } from '@/lib/db';
 import type { RuntimeAgent } from '@/lib/agents/runtime';
 import type { AgentMessage } from '@/lib/schemas';
 
@@ -17,28 +17,20 @@ export type ChatResult = { reply: string; messages: AgentMessage[] };
 
 const SCREEN_CONTEXT_CAP = 4000;
 
+import { buildAgentSystemPrompt } from '@/lib/prompts/founder-prompts';
+
 export function systemPromptFor(agent: RuntimeAgent, screenContext?: string, ambient?: string): string {
-  const lines = [
-    `You are ${agent.name}, an operator agent inside Founder OS.`,
-    agent.description,
-    'Answer concisely and use your tools to read live data when it helps.',
-    'You are READ-ONLY: never claim to have sent, created, scheduled, or published anything — you can only look things up and report.',
-  ];
-  if (ambient) {
-    // Tier one of the agent's memory: cheap, always present, no round trip.
-    // See lib/agents/ambient.ts for why it is this small.
-    lines.push(`What the OS knows right now:\n${ambient}`);
-  }
-  if (screenContext) {
-    lines.push(
-      `The operator is currently looking at this screen — use it as grounding when they say "this", "here", or ask about what they see:\n${screenContext.slice(0, SCREEN_CONTEXT_CAP)}`,
-    );
-  }
-  return lines.join('\n');
+  return buildAgentSystemPrompt({
+    agentName: agent.name,
+    agentRole: agent.departmentId || 'Operator Specialist',
+    agentDescription: agent.description,
+    ambientState: ambient,
+    screenContext,
+  });
 }
 
 export async function chatWithAgent(
-  db: FounderDb,
+  db: LEODb,
   agents: RuntimeAgent[],
   agentId: string,
   message: string,

@@ -3,7 +3,7 @@
 /**
  * First-run welcome pop-up. The first time someone clones the demo, runs
  * `npm run dev` and lands on the home screen, this greets them and points at
- * the FounderOS cohort. Dismissal persists to localStorage, so it appears
+ * the LEO cohort. Dismissal persists to localStorage, so it appears
  * once per browser and never nags again — the footer CTA (`CohortBanner`)
  * carries the same invite permanently on every view.
  */
@@ -63,7 +63,7 @@ export function CohortModal() {
       >
         <div className="flex items-start justify-between border-b border-os-border px-5 py-3.5">
           <div className="page-eyebrow flex items-center gap-2 pt-1 font-mono text-[9.5px] uppercase tracking-[0.32em] text-os-dim">
-            FounderOS Cohort
+            LEO Cohort
           </div>
           <button
             type="button"
@@ -83,11 +83,11 @@ export function CohortModal() {
             Build this for real
           </h2>
           <p className="mt-3 font-mono text-[12px] leading-relaxed text-os-muted">
-            You&apos;re running the FounderOS demo locally — the operator console, the agent
+            You&apos;re running the LEO demo locally — the operator console, the agent
             roster, the knowledge core, all of it.
           </p>
           <p className="mt-3 font-mono text-[12px] leading-relaxed text-os-muted">
-            Want help setting this up? Go to the FounderOS cohort to learn how to build the entire
+            Want help setting this up? Go to the LEO cohort to learn how to build the entire
             thing end-to-end and get it into production.
           </p>
 
@@ -99,7 +99,7 @@ export function CohortModal() {
               onClick={dismiss}
               className="inline-flex items-center justify-center gap-1.5 rounded-sm-t border border-os-accent bg-os-accent px-4 py-2.5 font-mono text-[10px] font-bold uppercase tracking-[0.18em] text-os-ink transition-opacity hover:opacity-90"
             >
-              Join the cohort — founderos.example.com
+              Join the cohort — LEO.example.com
               <ArrowUpRight className="h-3 w-3" />
             </a>
             <button

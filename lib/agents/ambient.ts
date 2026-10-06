@@ -16,7 +16,7 @@
  *  - cached, because a broadcast fans out to every agent at once and thirty
  *    identical reads of the same tables is thirty times nothing useful.
  */
-import type { FounderDb } from '@/lib/db';
+import type { LEODb } from '@/lib/db';
 import type { RuntimeAgent } from '@/lib/agents/runtime';
 
 /** Roughly 200 tokens. Enough to orient an agent, too small to crowd a turn. */
@@ -48,7 +48,7 @@ function clip(s: string, n: number): string {
 }
 
 /** The department's real name when the OS knows it, else the id, never a guess. */
-function departmentName(db: FounderDb, id: string): string {
+function departmentName(db: LEODb, id: string): string {
   try {
     return db.departments.all().find((d) => d.id === id)?.name ?? id;
   } catch {
@@ -56,7 +56,7 @@ function departmentName(db: FounderDb, id: string): string {
   }
 }
 
-function buildPack(db: FounderDb, agent: RuntimeAgent, now: number): string {
+function buildPack(db: LEODb, agent: RuntimeAgent, now: number): string {
   const lines: string[] = [];
 
   lines.push(`You are ${agent.name} (${agent.id}) in ${departmentName(db, agent.departmentId)}.`);
@@ -99,7 +99,7 @@ function buildPack(db: FounderDb, agent: RuntimeAgent, now: number): string {
   return pack.length > AMBIENT_BUDGET_CHARS ? pack.slice(0, AMBIENT_BUDGET_CHARS) : pack;
 }
 
-export function ambientPack(db: FounderDb, agent: RuntimeAgent, opts: { now?: number } = {}): string {
+export function ambientPack(db: LEODb, agent: RuntimeAgent, opts: { now?: number } = {}): string {
   const now = opts.now ?? Date.now();
   const hit = cache.get(agent.id);
   if (hit && now - hit.at < AMBIENT_TTL_MS) return hit.pack;

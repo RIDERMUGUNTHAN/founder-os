@@ -4,7 +4,7 @@ import {
   incomeAccounts,
   totalIncome,
   totalIncomeUpper,
-  totalExpenses,
+  totRiderpenses,
   expensesByCategory,
   net,
   DECLARED_EXPENSES,
@@ -128,7 +128,7 @@ export default async function FinancesPage() {
   const monthLabel = ledgerMonth
     ? new Date(`${ledgerMonth}-01T00:00:00Z`).toLocaleDateString('en-US', { month: 'short', year: 'numeric', timeZone: 'UTC' })
     : null;
-  const expenses = expensesLive ? ledgerSpend.reduce((s, c) => s + c.total, 0) : totalExpenses(DECLARED_EXPENSES);
+  const expenses = expensesLive ? ledgerSpend.reduce((s, c) => s + c.total, 0) : totRiderpenses(DECLARED_EXPENSES);
   const netMonthly = net(incomeMtd, expenses);
   // Income is month to date, so only this month's statement (or the monthly
   // set fees) can be netted against it.

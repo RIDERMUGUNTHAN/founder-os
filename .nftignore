@@ -1,0 +1,4 @@
+# Ignore Windows junction points that cause EPERM errors
+**/Application Data/**
+C:/Users/Admin/Application Data/**
+C:\Users\Admin\Application Data/**

@@ -1,6 +1,6 @@
 import fs from 'node:fs';
 import path from 'node:path';
-import type { FounderDb } from '@/lib/db';
+import type { LEODb } from '@/lib/db';
 import type { CaptureInput, CaptureOutcome } from '@/lib/connectors/gbrain';
 import type { PlaudFile, PlaudRecording } from '@/lib/connectors/plaud';
 import type { PlaudIngest } from '@/lib/schemas';
@@ -23,7 +23,7 @@ import { slugifyTitle } from '@/lib/brain-dump';
  */
 
 export type IngestDeps = {
-  db: FounderDb;
+  db: LEODb;
   list: () => Promise<PlaudRecording[]>;
   fetchFile: (id: string) => Promise<PlaudFile | null>;
   captureProse: (input: CaptureInput) => Promise<CaptureOutcome>;
@@ -179,7 +179,7 @@ export async function ingestPlaudRecordings(deps: IngestDeps): Promise<IngestRes
 
 /** The live wiring: Plaud API in, gbrain capture (store-file fallback) and
  *  OptimalEngine claims out. What the agent, the cron and POST /api/plaud/ingest run. */
-export async function ingestPlaudNow(db: FounderDb): Promise<IngestResult> {
+export async function ingestPlaudNow(db: LEODb): Promise<IngestResult> {
   const { recentPlaudRecordings, getPlaudFile, plaudConfigured } = await import('@/lib/connectors/plaud');
   const { createGBrainProvider, gbrainStorePath } = await import('@/lib/connectors/gbrain');
   const { createOptimalProvider } = await import('@/lib/connectors/optimal');

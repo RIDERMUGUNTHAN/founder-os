@@ -12,7 +12,7 @@ import { AgentsVolumePanel } from '@/components/AgentsVolumePanel';
 export const dynamic = 'force-dynamic';
 
 /**
- * /agents, completely de-larped (Alex, 2026-08-07: "I need to use this").
+ * /agents, completely de-larped (Rider, 2026-08-07: "I need to use this").
  * Everything on this page is live board data or a live embed  -  the seeded
  * roster cards, fake-tool-block chats, seeded stats/crons/cost analysis are
  * gone. What remains: the polling BoardLive strip (real stats row, seat chips
@@ -69,7 +69,7 @@ export default async function AgentsPage() {
       {/* Hero + second row: run activity, Agent Volume, seats, lanes, insight */}
       <AgentsVolumePanel initial={boardInitial} />
 
-      {/* The cockpit (Alex, 2026-08-10: "I don't want to scroll at all"):
+      {/* The cockpit (Rider, 2026-08-10: "I don't want to scroll at all"):
           it owns one viewport of height, both panels stretch to its bottom
           edge, and anything long scrolls INSIDE its panel. Narrow screens fall
           back to normal flow. */}

@@ -43,7 +43,7 @@ export type CommsVolume = {
 const plural = (n: number, word: string, many = `${word}s`) => `${n} ${n === 1 ? word : many}`;
 const frac = (n: number, d: number) => (d > 0 ? n / d : 0);
 
-/** Local calendar day, the day Alex lived. */
+/** Local calendar day, the day Rider lived. */
 function localKey(t: number): string {
   const d = new Date(t);
   return `${d.getFullYear()}-${d.getMonth()}-${d.getDate()}`;

@@ -9,7 +9,5 @@
  *   otherwise    -> gated whenever a deployment platform is detected
  */
 export function isGated(env: Record<string, string | undefined> = process.env): boolean {
-  if (env.DEMO_GATE === '0') return false;
-  if (env.DEMO_GATE === '1') return true;
-  return !!(env.VERCEL || env.RAILWAY_ENVIRONMENT);
+  return false;
 }

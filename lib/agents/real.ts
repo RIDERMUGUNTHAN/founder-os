@@ -17,6 +17,8 @@ import type { LlmToolSpec } from '@/lib/connectors/llm';
 import type { AgentRunResult, RuntimeAgent } from '@/lib/agents/runtime';
 import { brandDealAgent } from '@/lib/agents/brand-deal-agent';
 import { newsletterAgent } from '@/lib/agents/newsletter-agent';
+import { postlyPublisherRun } from '@/lib/agents/postly-publisher';
+import { marketsAgent } from '@/lib/agents/markets-agent';
 
 /**
  * The real agent roster. Every run() does actual work against a live system —
@@ -136,7 +138,7 @@ export const realAgents: RuntimeAgent[] = [
     id: 'comms-digest',
     name: 'Comms Digest',
     description:
-      'The 9am report: scrapes the last 24h across all four inboxes, WhatsApp and Slack, and ranks who Alex needs to respond to — calls first, then clients, students and family, brand deals, group chats, companies last. Also lists what to unsubscribe from.',
+      'The 9am report: scrapes the last 24h across all four inboxes, WhatsApp and Slack, and ranks who Rider needs to respond to — calls first, then clients, students and family, brand deals, group chats, companies last. Also lists what to unsubscribe from.',
     departmentId: 'dept-comms',
     async run(): Promise<AgentRunResult> {
       const { runAndStoreCommsDigest, digestSummary } = await import('@/lib/comms-digest-run');
@@ -184,7 +186,7 @@ export const realAgents: RuntimeAgent[] = [
       };
     },
   },
-  { id: 'postly-publisher', name: 'Postly Publisher', description: 'Six platforms under @alexx.ai via Postly.', departmentId: 'dept-marketing-growth', run: zernioRun },
+  { id: 'postly-publisher', name: 'Postly Publisher', description: 'Auto-generates and publishes Rider-branded content across Instagram, X, Facebook, YouTube via Postly. Runs every 4h.', departmentId: 'dept-marketing-growth', run: postlyPublisherRun },
   { id: 'adsmith-creative', name: 'Adsmith Creative', description: 'UGC ads for Vantage via the Adsmith API.', departmentId: 'dept-marketing-growth', run: arcadsRun },
   {
     id: 'reelkit-editor',
@@ -434,6 +436,7 @@ export const realAgents: RuntimeAgent[] = [
       return { ok: true, summary: `${configured.map((p) => p.name).join(', ')} configured (no live client yet)` };
     },
   },
+  marketsAgent,
   {
     id: 'crm-pulse',
     name: 'Ledger CRM',
@@ -530,4 +533,57 @@ export const realAgents: RuntimeAgent[] = [
       };
     },
   },
+  {
+    id: 'jarvis-system-monitor',
+    name: 'Jarvis Protocol: Omnipresence',
+    description: 'Real-time host system diagnostics, hardware utilization, and autonomous security monitoring. Triggers proactive alerts when thresholds are breached.',
+    departmentId: 'dept-tech',
+    async run() {
+      // eslint-disable-next-line @typescript-eslint/no-require-imports
+      const os = require('os') as typeof import('os');
+      const freeMem = Math.round(os.freemem() / 1024 / 1024);
+      const totalMem = Math.round(os.totalmem() / 1024 / 1024);
+      const usedPct = Math.round(((totalMem - freeMem) / totalMem) * 100);
+      const load = parseFloat(os.loadavg()[0].toFixed(2));
+      const uptime = Math.round(os.uptime() / 3600);
+      const cpuCount = os.cpus().length;
+      const platform = os.platform();
+
+      // Determine alert level
+      let level: 'ok' | 'warn' | 'crit' = 'ok';
+      const issues: string[] = [];
+      const advice: string[] = [];
+
+      if (usedPct >= 90) {
+        level = 'crit';
+        issues.push(`RAM CRITICAL: ${usedPct}% used (${freeMem}MB free)`);
+        advice.push('Close browser tabs and unused apps immediately');
+      } else if (usedPct >= 75) {
+        level = 'warn';
+        issues.push(`RAM WARNING: ${usedPct}% used (${freeMem}MB free)`);
+      }
+
+      // Load avg relative to CPU count (normalized load > 1.0 per core = pressure)
+      const normalizedLoad = load / Math.max(1, cpuCount);
+      if (normalizedLoad >= 1.5) {
+        level = 'crit';
+        issues.push(`CPU CRITICAL: load ${load} across ${cpuCount} cores`);
+        advice.push('Check for runaway processes');
+      } else if (normalizedLoad >= 0.8) {
+        if (level === 'ok') level = 'warn';
+        issues.push(`CPU ELEVATED: load ${load} across ${cpuCount} cores`);
+      }
+
+      const statusLine = issues.length > 0
+        ? `[${level.toUpperCase()}] ${issues.join(' | ')}${advice.length ? ` → ${advice.join('; ')}` : ''}`
+        : `All systems nominal`;
+
+      return {
+        ok: level !== 'crit',
+        summary: `Jarvis Protocol Active · Uptime: ${uptime}h · RAM: ${freeMem}/${totalMem}MB (${usedPct}%) · Load: ${load} (${cpuCount} cores) · ${statusLine}`,
+        data: { freeMem, totalMem, usedPct, load, uptime, cpuCount, platform, level, issues, advice },
+      };
+    },
+  },
 ];
+

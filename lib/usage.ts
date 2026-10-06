@@ -1,5 +1,5 @@
 /**
- * Token-burn accounting across the model subscriptions Alex actually pays
+ * Token-burn accounting across the model subscriptions Rider actually pays
  * for: ONE Claude plan (burned from the MacBook and the mini), ONE ChatGPT
  * plan (Codex), and ONE Ollama plan. Every token is attributed to the lane
  * that burned it (the agent board, Superset sessions, plain terminal
@@ -104,7 +104,7 @@ export const STALE_PUSH_MS = 24 * 3600_000;
 
 // ── day math ────────────────────────────────────────────────────────────────
 
-/** Local-timezone calendar day for an ISO timestamp: the day Alex lived. */
+/** Local-timezone calendar day for an ISO timestamp: the day Rider lived. */
 export function dayKey(ts: string): string {
   const d = new Date(ts);
   const p = (n: number) => String(n).padStart(2, '0');

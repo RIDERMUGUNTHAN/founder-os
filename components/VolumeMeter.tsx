@@ -1,7 +1,7 @@
 /**
  * The Deal Volume bar: a label/value row over a rounded track whose hatched,
  * glowing fill sweeps out from the left on mount. Brand Deals introduced it;
- * Home wears it too (Alex, 2026-09-24: "I like the way the deal volume bars
+ * Home wears it too (Rider, 2026-09-24: "I like the way the deal volume bars
  * go out"). Pure presentation: every caller passes its own numbers.
  */
 const EASE = 'cubic-bezier(.2,.7,.2,1)';

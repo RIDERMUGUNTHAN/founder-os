@@ -26,7 +26,7 @@ import { boardDecisionFor, boardStats, groupIssues, modelSummary, orderRuns, ord
 import type { PaperclipAgent } from '@/lib/connectors/paperclip';
 
 /**
- * The live Paperclip board rendered natively in the OS (Alex, 2026-08-07:
+ * The live Paperclip board rendered natively in the OS (Rider, 2026-08-07:
  * "I want to see the agents running live on my OS, not go look at Paperclip").
  * Polls /api/board/live every 4s while the tab is visible: seat chips with
  * status LEDs and models, the heartbeat run feed, and the task lanes. Every
@@ -36,7 +36,7 @@ import type { PaperclipAgent } from '@/lib/connectors/paperclip';
 const POLL_MS = 4000;
 
 /**
- * One glyph per seat instead of an anonymous dot (Alex, 2026-08-14: "a
+ * One glyph per seat instead of an anonymous dot (Rider, 2026-08-14: "a
  * little icon for each agent ... color coded with the department heads").
  * Matched by name so renamed/new seats still land somewhere; Bot is the
  * honest fallback for a seat we do not recognize.
@@ -167,10 +167,10 @@ function SeatChip({ agent, since }: { agent: PaperclipAgent; since: string | nul
         className={`mt-0.5 h-3.5 w-3.5 shrink-0${running ? ' animate-pulse' : ''}`}
         style={{ color: seatIconColor(agent, live, color) }}
       />
-      {/* Name with the model line always under it  -  Alex, 2026-08-14: the
+      {/* Name with the model line always under it  -  Rider, 2026-08-14: the
           model/adapter readout must NOT disappear while the seat is running.
           Both lines TRUNCATE and the chip stays two lines tall. Wrapping them
-          so nothing was cut made every chip up to twice as tall  -  Alex,
+          so nothing was cut made every chip up to twice as tall  -  Rider,
           2026-08-18: "the agent boxes are too big now". A compact roster beats
           a complete one here; the title tooltips carry the full strings, and
           the header's model roster already lists every model in play. */}
@@ -268,7 +268,7 @@ export function BoardLive({ initial, boardUrl }: { initial: BoardLivePayload; bo
         </div>
         {/* The model roster gets its own full-width line and WRAPS. Squeezed
             into the header row it was `ml-auto truncate`, so anything past the
-            fifth model clipped to an ellipsis  -  Alex, 2026-08-18: "can't
+            fifth model clipped to an ellipsis  -  Rider, 2026-08-18: "can't
             see the rest of the models on the board". */}
         {data.connected && (
           <p className="mt-1 font-mono text-[10px] leading-relaxed text-os-muted" title="models holding seats right now">
@@ -310,9 +310,9 @@ export function BoardLive({ initial, boardUrl }: { initial: BoardLivePayload; bo
             ))}
           </div>
 
-          {/* the feed + lanes absorb ALL remaining panel height (Alex:
+          {/* the feed + lanes absorb ALL remaining panel height (Rider:
               use up the white space, scroll inside the panel only) */}
-          {/* Alex, 2026-08-18: "move that to the right and add the stages".
+          {/* Rider, 2026-08-18: "move that to the right and add the stages".
               The run feed is a fixed-shape list and never needed half the
               panel; the lanes did, so they take everything that is left. */}
           <div className="grid min-h-0 flex-1 gap-4 lg:grid-cols-[minmax(0,12rem)_minmax(0,1fr)]">

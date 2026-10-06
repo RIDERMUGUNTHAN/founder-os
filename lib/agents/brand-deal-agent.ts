@@ -46,7 +46,7 @@ async function run(): Promise<AgentRunResult> {
     return {
       ok: true,
       summary: 'No brand deals in the OS yet, so there is nothing to work. Ingest a deal and the agent has something to do.',
-      data: { dealCount: 0, actions: [], awaitingFromfounder: openSkillQuestions(skill) },
+      data: { dealCount: 0, actions: [], awaitingFromLEO: openSkillQuestions(skill) },
     };
   }
 
@@ -68,7 +68,7 @@ async function run(): Promise<AgentRunResult> {
       actions,
       draft: reply.text,
       // Every run tells the operator what it is still negotiating blind about.
-      awaitingFromfounder: missing,
+      awaitingFromLEO: missing,
     },
     tokensIn: reply.usage?.inputTokens,
     tokensOut: reply.usage?.outputTokens,

@@ -115,7 +115,7 @@ const pct = (n: number, d: number) => (d > 0 ? n / d : 0);
 
 /** Home's own numbers shaped like Brand Deals' Deal Volume: a headline for
     today plus four meters, each a real fraction of its own whole. Runs count
-    toward "today" by local midnight, the day Alex lived. */
+    toward "today" by local midnight, the day Rider lived. */
 export function operatingVolume(x: {
   connected: number;
   totalConnections: number;
@@ -178,7 +178,7 @@ export function sourceMix(items: { source: string }[]): { label: string; count: 
   return SOURCES.map((s) => ({ label: s, count: items.filter((i) => i.source === s).length }));
 }
 
-/** Home's one gradient card: everything waiting on Alex right now, and
+/** Home's one gradient card: everything waiting on Rider right now, and
     how much of today's work that is (waiting / (waiting + done today)). */
 export function homeAttention(x: { inbound: number; failedToday: number; connectorsDown: number; doneToday: number }): { count: number; headline: string; frac: number } {
   const count = x.inbound + x.failedToday + x.connectorsDown;

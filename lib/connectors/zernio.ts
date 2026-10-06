@@ -8,7 +8,7 @@ import type { ConnectorStatus } from '@/lib/connectors/types';
 /** Optional local account map. Generic and env-overridable: nothing here may
  *  depend on a path that exists only on one person's machine. */
 function configPath(): string {
-  return process.env.ZERNIO_CONFIG_PATH ?? path.join(os.homedir(), '.founder-os', 'social.json');
+  return process.env.ZERNIO_CONFIG_PATH ?? path.join(os.homedir(), '.LEO-os', 'social.json');
 }
 
 type ZernioConfig = {
@@ -189,27 +189,9 @@ export function parsePostDays(raw: unknown): ZernioPostDay[] {
 // going out + a live posting calendar without a live key. Local dev (ungated)
 // stays honest — these are only returned when GATED and no key is set.
 const gatedIso = (daysBack: number): string => new Date(Date.now() - daysBack * 86_400_000).toISOString();
-const GATED_RECENT_POSTS: ZernioPost[] = [
-  { platform: 'instagram', caption: 'The AI agency stack that runs my whole business (full breakdown) 🧵', url: 'https://instagram.com', publishedAt: gatedIso(0), status: 'published' },
-  { platform: 'tiktok', caption: 'POV: your inbox, calendar and CRM run themselves', url: 'https://tiktok.com', publishedAt: gatedIso(1), status: 'published' },
-  { platform: 'youtube', caption: 'I automated a 7-figure agency with AI agents — here is how', url: 'https://youtube.com', publishedAt: gatedIso(2), status: 'published' },
-  { platform: 'twitter', caption: '5 agents that replaced 5 hires. Thread 👇', url: 'https://x.com', publishedAt: gatedIso(3), status: 'published' },
-  { platform: 'instagram', caption: 'Vantage case study: 3x pipeline in 60 days', url: 'https://instagram.com', publishedAt: gatedIso(4), status: 'published' },
-  { platform: 'linkedin', caption: 'Why every operator needs a knowledge graph, not another SaaS', url: 'https://linkedin.com', publishedAt: gatedIso(5), status: 'published' },
-  { platform: 'tiktok', caption: 'Building an AI receptionist live (it books the call)', url: 'https://tiktok.com', publishedAt: gatedIso(6), status: 'published' },
-  { platform: 'instagram', caption: 'The 4-inbox triage agent that saves me 10 hrs/week', url: 'https://instagram.com', publishedAt: gatedIso(8), status: 'published' },
-  { platform: 'youtube', caption: 'Full G-Brain walkthrough, my second brain', url: 'https://youtube.com', publishedAt: gatedIso(9), status: 'published' },
-  { platform: 'twitter', caption: 'Ship agents, not dashboards.', url: 'https://x.com', publishedAt: gatedIso(11), status: 'published' },
-];
+const GATED_RECENT_POSTS: ZernioPost[] = [];
 function gatedPostDays(): ZernioPostDay[] {
-  const plat = ['instagram', 'tiktok', 'twitter', 'youtube', 'linkedin'];
-  const days: ZernioPostDay[] = [];
-  for (let d = 0; d < 30; d++) {
-    if (d % 7 === 5) continue; // an occasional quiet day
-    const n = 1 + (d % 3); // 1–3 platforms
-    days.push({ date: gatedIso(d).slice(0, 10), platforms: plat.slice(d % 3, (d % 3) + n) });
-  }
-  return days;
+  return [];
 }
 
 let postDaysCache: { at: number; data: ZernioPostDay[] } | null = null;

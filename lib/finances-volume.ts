@@ -3,7 +3,7 @@ import { totalIncome, totalIncomeUpper } from '@/lib/finances';
 import { monthlyTotals, type SpendRow } from '@/lib/spend-report';
 
 /**
- * /finances in the Brand Deals look (Alex, 2026-09-24). The page's own
+ * /finances in the Brand Deals look (Rider, 2026-09-24). The page's own
  * numbers shaped like Deal Volume: a month-to-date income headline, money out
  * and net as dot chips, one meter per processor (its real share of income),
  * spend as a share of income, and the one insight card (what was kept).

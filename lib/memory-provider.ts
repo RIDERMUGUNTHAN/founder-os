@@ -1,7 +1,7 @@
 import type { BrainProvider, BrainSearchResult, BrainStatus } from '@/lib/brain';
 import { retrieveBrain } from '@/lib/brain-retrieval';
 import type { CaptureInput, CaptureOutcome } from '@/lib/connectors/gbrain';
-import type { FounderDb } from '@/lib/db';
+import type { LEODb } from '@/lib/db';
 import type { DigestEntry } from '@/lib/comms-digest';
 
 /**
@@ -93,7 +93,7 @@ function errorText(err: unknown): string {
 }
 
 /** The most recent run per agent — a failure that was later fixed is fixed. */
-function lastRunPerAgent(db: FounderDb) {
+function lastRunPerAgent(db: LEODb) {
   const latest = new Map<string, { agentId: string; ok: boolean; summary: string; startedAt: string }>();
   for (const r of db.agentRuns.recent(200)) {
     const seen = latest.get(r.agentId);
@@ -102,7 +102,7 @@ function lastRunPerAgent(db: FounderDb) {
   return [...latest.values()];
 }
 
-function digestFacts(db: FounderDb, now: number): MemoryFact[] {
+function digestFacts(db: LEODb, now: number): MemoryFact[] {
   const row = db.commsDigests.latest();
   if (!row) return [];
   let digest: { entries?: DigestEntry[]; total?: number; needsReply?: number } | undefined;
@@ -144,7 +144,7 @@ function digestFacts(db: FounderDb, now: number): MemoryFact[] {
  * Everything the OS knows about right now, read from sqlite only.
  * Pure with respect to the clock: `now` is passed in so it is testable.
  */
-export function collectFacts(db: FounderDb, now: number = Date.now()): MemoryFact[] {
+export function collectFacts(db: LEODb, now: number = Date.now()): MemoryFact[] {
   const facts: MemoryFact[] = [];
 
   const runs = lastRunPerAgent(db);
@@ -240,7 +240,7 @@ export function renderBrief(input: RenderInput): { markdown: string; truncated: 
   const degraded = !!input.query && !input.brain.connected;
 
   const header = [
-    `# Founder OS memory · ${new Date(input.now).toISOString()}`,
+    `# LEO memory · ${new Date(input.now).toISOString()}`,
     `G-Brain: ${input.brain.detail}`,
   ].join('\n');
 
@@ -329,7 +329,7 @@ export type MemoryProvider = {
   remember(input: CaptureInput): Promise<CaptureOutcome>;
 };
 
-export function createMemoryProvider(opts: { db: FounderDb; brain: MemoryBrain }): MemoryProvider {
+export function createMemoryProvider(opts: { db: LEODb; brain: MemoryBrain }): MemoryProvider {
   const { db, brain } = opts;
 
   async function safeStatus(): Promise<BrainStatus> {

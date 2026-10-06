@@ -8,7 +8,7 @@
  * (wired as a live filter), barber-pole meters, a step-line and a dot-matrix
  * mini, exactly ONE gradient insight card, and a detail drawer.
  *
- * Read-only by design: Notion stays the source of truth (Alex's brand-deal
+ * Read-only by design: Notion stays the source of truth (Rider's brand-deal
  * agents and his friend's guest access live there), so every deal deep-links
  * back and nothing here writes. The board rereads the hub on refresh or
  * within the connector's cache window.

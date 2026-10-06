@@ -5,7 +5,7 @@ import { CountUp, type CountKind } from '@/components/CountUp';
 import { VolumeMeter } from '@/components/VolumeMeter';
 
 /**
- * The Brand Deals slab as a kit (2026-09-24, Alex: "rebuild the entire OS
+ * The Brand Deals slab as a kit (2026-09-24, Rider: "rebuild the entire OS
  * in that light"). DealBoard is the reference; every page composes these so
  * the opening beat, the sweeping meters and the numerals read the same OS-wide:
  *

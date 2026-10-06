@@ -129,6 +129,7 @@ export const DECLARED_EXPENSES: ExpenseItem[] = [
 export function totalExpenses(items: ExpenseItem[]): number {
   return items.reduce((sum, e) => sum + e.monthly, 0);
 }
+export const totRiderpenses = totalExpenses;
 
 /** Per-category totals, largest first. */
 export function expensesByCategory(items: ExpenseItem[]): { category: string; total: number }[] {

@@ -1,6 +1,6 @@
 import path from 'node:path';
 import fs from 'node:fs';
-import { openDb, type FounderDb } from '@/lib/db';
+import { openDb, type LEODb } from '@/lib/db';
 import { SEED_VERSION, seedDatabase, syncSeededProposals } from '@/lib/seed';
 import { resolveDbPath } from '@/lib/paths';
 
@@ -9,14 +9,14 @@ import { resolveDbPath } from '@/lib/paths';
  * through this seeded SQLite database, so swapping in live sources later is a
  * repo-level change, not a UI rewrite.
  */
-let instance: FounderDb | null = null;
+let instance: LEODb | null = null;
 
-export function getDb(): FounderDb {
+export function getDb(): LEODb {
   if (instance) return instance;
   // Resolved per platform: Railway volume (DATA_DIR) > Vercel /tmp > repo data/.
   // On Railway the volume persists, so the DB is durable, not per-cold-start.
-  // FOUNDER_OS_DB still overrides everything. See lib/paths.ts.
-  const dbPath = resolveDbPath('founder-os.db', process.env.FOUNDER_OS_DB);
+  // LEO_OS_DB still overrides everything. See lib/paths.ts.
+  const dbPath = resolveDbPath('leo.db', process.env.LEO_DB);
   if (dbPath !== ':memory:') fs.mkdirSync(path.dirname(dbPath), { recursive: true });
   instance = openDb(dbPath);
   // Seed on first touch so a fresh clone boots looking alive. Each clause

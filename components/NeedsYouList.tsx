@@ -13,9 +13,9 @@ import type { DecisionKind, DeliverableDecision } from '@/lib/schemas';
 import { Label } from '@/components/terminal';
 
 /**
- * Needs You  -  the queue of agent work waiting on Alex.
+ * Needs You  -  the queue of agent work waiting on Rider.
  *
- * Alex, 2026-08-20: "I need a way to see that I'm getting tasks done or a
+ * Rider, 2026-08-20: "I need a way to see that I'm getting tasks done or a
  * place I can go to verify work ... I want to be able to approve tasks that
  * agents need my input on."
  *
@@ -74,7 +74,7 @@ function subject(name: string): string {
 /**
  * The dot, on the piece of content itself.
  *
- * Alex, 2026-08-22: "can you put the dot of what I haven't seen any updates
+ * Rider, 2026-08-22: "can you put the dot of what I haven't seen any updates
  * to on the actual piece of content that was created so I can know that that
  * was created?"
  *
@@ -153,7 +153,7 @@ function Row({
           <span className="ml-auto shrink-0">{when(c.modifiedAt)}</span>
         </div>
 
-        {/* The title is the document's own, not the filename. Alex,
+        {/* The title is the document's own, not the filename. Rider,
             2026-08-21: "That's not fucking English I can't read it." */}
         <div className="mt-0.5 text-[12.5px] font-semibold leading-snug text-os-text" title={c.name}>
           {text}
@@ -282,7 +282,7 @@ export function NeedsYouList({
             open board <ExternalLink className="h-3 w-3" />
           </a>
         )}
-        {/* Bulk clear (Alex, 2026-08-22: "bulk clear as well"). DISMISS only:
+        {/* Bulk clear (Rider, 2026-08-22: "bulk clear as well"). DISMISS only:
             on a staged item approve means SEND IT, so there is deliberately no
             bulk approve. Two clicks, because 45 dismissals is not undoable in
             one gesture even though each row individually is. */}

@@ -67,7 +67,7 @@ async function run(): Promise<AgentRunResult> {
     data: {
       brief,
       draft: reply.text,
-      awaitingFromfounder: openSkillQuestions(skill),
+      awaitingFromLEO: openSkillQuestions(skill),
     },
     tokensIn: reply.usage?.inputTokens,
     tokensOut: reply.usage?.outputTokens,

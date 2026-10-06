@@ -1,4 +1,4 @@
-import type { FounderDb } from '@/lib/db';
+import type { LEODb } from '@/lib/db';
 import { PERSONAS } from '@/lib/personas-seed';
 import { runCostUsd } from '@/lib/agent-costs';
 import type {
@@ -164,7 +164,7 @@ const agents: Agent[] = [
     status: 'active',
     tier: 'worker',
     description:
-      'Negotiates as Vera, Alex\u2019s brand deal manager: qualifies inbound, anchors and counters, chases unpaid invoices, and bumps stalled threads. A tested contact governor decides whether a thread may be touched at all (five bumps maximum, one revival per brand per six months). Drafts only, never sends.',
+      'Negotiates as Vera, Rider\u2019s brand deal manager: qualifies inbound, anchors and counters, chases unpaid invoices, and bumps stalled threads. A tested contact governor decides whether a thread may be touched at all (five bumps maximum, one revival per brand per six months). Drafts only, never sends.',
     model: 'rules + gateway',
     tools: ['ledger', 'imap'],
     parentId: 'sales-agent',
@@ -191,7 +191,7 @@ const agents: Agent[] = [
     role: 'Six-Platform Publishing',
     status: 'active',
     tier: 'worker',
-    description: 'Publishes and monitors six platforms under @founderos.ai via Postly. Live once the Postly key is set.',
+    description: 'Publishes and monitors six platforms under @LEO.ai via Postly. Live once the Postly key is set.',
     model: 'postly api',
     tools: ['postly'],
     parentId: 'social-agent',
@@ -449,6 +449,19 @@ const agents: Agent[] = [
     parentId: null,
     instance: 'builtin',
   },
+  {
+    id: 'jarvis-system-monitor',
+    departmentId: 'dept-tech',
+    name: 'Jarvis Protocol: Omnipresence',
+    role: 'System Security & Diagnostics',
+    status: 'active',
+    tier: 'lead',
+    description: 'Autonomous host monitoring. Scans memory, processor load, uptime, and security perimeters 24/7.',
+    model: 'node-os-monitor',
+    tools: ['os-diagnostics'],
+    parentId: null,
+    instance: 'builtin',
+  },
   // ── Clients: roster, onboarding, service ──────────────────────────────────
   {
     id: 'client-roster',
@@ -646,7 +659,7 @@ const sopTasks: SopTask[] = [
       'Connect the four configured IMAP inboxes on the sync cadence',
       'Pull unread counts and every thread newer than the last sweep',
       'Classify each thread: urgent, reply-needed, waiting-on-us, FYI',
-      'Draft suggested replies for reply-needed threads in Alex voice',
+      'Draft suggested replies for reply-needed threads in Rider voice',
       'Hand urgent threads to the escalation queue with a one-line summary',
       'Surface anything from a client domain to the Clients pillar too',
     ],
@@ -705,7 +718,7 @@ const sopTasks: SopTask[] = [
   {
     id: 'sop-postly-publisher', departmentId: 'dept-marketing-growth', assigneeKind: 'agent', assigneeId: 'postly-publisher',
     title: 'Publish to six platforms',
-    summary: 'One queue out to every @founderos.ai surface.',
+    summary: 'One queue out to every @LEO.ai surface.',
     steps: [
       'Take the next queued post from the pipeline',
       'Adapt the caption per platform (IG, TikTok, X, YouTube, LinkedIn, Facebook)',
@@ -857,9 +870,9 @@ const sopTasks: SopTask[] = [
     steps: [
       'Read the OS brand deal store and rank what needs answering today',
       'Check the contact governor before touching any thread, and respect a refusal',
-      'Draft the reply, counter or bump as Vera, speaking about Alex in third person',
+      'Draft the reply, counter or bump as Vera, speaking about Rider in third person',
       'Escalate anything below floor, equity shaped, or asking for a call',
-      'Leave every draft for Alex to send, and never claim one went out',
+      'Leave every draft for Rider to send, and never claim one went out',
     ],
   },
   {
@@ -982,8 +995,8 @@ const sopTasks: SopTask[] = [
     summary: 'The human hands on the threads that need judgment.',
     steps: [
       'Review the escalation queue the workers built overnight',
-      'Draft replies in Alex’s voice for VIP threads',
-      'Send what is cleared, file the rest for Alex’s approval',
+      'Draft replies in Rider’s voice for VIP threads',
+      'Send what is cleared, file the rest for Rider’s approval',
       'Chase any thread waiting on us for more than 24 hours',
       'Close the loop in /comms so nothing dangles',
     ],
@@ -997,7 +1010,7 @@ const sopTasks: SopTask[] = [
       'Categorize transactions using the statement’s own categories',
       'Reconcile against the income the agents recorded and chase every gap',
       'Confirm refunds and disputes are reflected in the venture totals',
-      'Deliver the month-end P&L to Alex with three lines of commentary',
+      'Deliver the month-end P&L to Rider with three lines of commentary',
     ],
   },
   {
@@ -1066,7 +1079,7 @@ const tools: Tool[] = [
 // their bar as done/total of the rows they own, so a row without a phase
 // would quietly shrink a percentage instead of showing up in it.
 const roadmap: RoadmapItem[] = [
-  { id: 'rm-v1', title: 'FOUNDER OS v1 baseline', quarter: '2026-Q2', status: 'done', departmentId: 'dept-tech', description: 'Six views, SQLite repos, 32 tests.', phaseId: 'phase-2' },
+  { id: 'rm-v1', title: 'LEO v1 baseline', quarter: '2026-Q2', status: 'done', departmentId: 'dept-tech', description: 'Six views, SQLite repos, 32 tests.', phaseId: 'phase-2' },
   { id: 'rm-mono', title: 'Monochrome rebuild + real connectors', quarter: '2026-Q2', status: 'done', departmentId: 'dept-tech', description: 'Black & white theme; IMAP, Slack, Stripe, gbrain wired.', phaseId: 'phase-1' },
   { id: 'rm-gbrain', title: 'G-Brain provider live', quarter: '2026-Q2', status: 'done', departmentId: 'dept-tech', description: 'gbrain CLI doctor/query + brain-store local fallback.', phaseId: 'phase-1' },
   { id: 'rm-creds-email', title: 'Connect 4 email inboxes', quarter: '2026-Q2', status: 'done', departmentId: 'dept-comms', description: 'Four Gmail IMAP slots live on app passwords, feeding /comms.', phaseId: 'phase-1' },
@@ -1084,8 +1097,8 @@ const roadmap: RoadmapItem[] = [
   { id: 'rm-workers', title: 'Worker pool on the host', quarter: '2026-Q3', status: 'now', departmentId: 'dept-tech', description: 'Cheap model seats behind the Conductor. Hardening and gateway install left.', phaseId: 'phase-3' },
   { id: 'rm-statements', title: 'Statement ingestion', quarter: '2026-Q3', status: 'now', departmentId: 'dept-finance', description: 'Card and bank statements parsed into /finances instead of hand entry.', phaseId: 'phase-1' },
   { id: 'rm-railway', title: 'Move hosting to Railway', quarter: '2026-Q3', status: 'now', departmentId: 'dept-tech', description: 'Every app moving to one platform; the gated OS demo went first as the pilot.', phaseId: 'phase-4' },
-  { id: 'rm-ui', title: 'Interaction rebrand', quarter: '2026-Q3', status: 'now', departmentId: 'dept-tech', description: 'Alex-led design pass over the whole OS now the integrations are live.', phaseId: 'phase-2' },
-  { id: 'rm-auth', title: 'Auth + remote access', quarter: '2026-Q4', status: 'next', departmentId: 'dept-tech', description: 'Reach FOUNDER OS on the host from anywhere, safely.', phaseId: 'phase-4' },
+  { id: 'rm-ui', title: 'Interaction rebrand', quarter: '2026-Q3', status: 'now', departmentId: 'dept-tech', description: 'Rider-led design pass over the whole OS now the integrations are live.', phaseId: 'phase-2' },
+  { id: 'rm-auth', title: 'Auth + remote access', quarter: '2026-Q4', status: 'next', departmentId: 'dept-tech', description: 'Reach LEO on the host from anywhere, safely.', phaseId: 'phase-4' },
   { id: 'rm-postiz', title: 'Replace Postly with Postiz', quarter: '2026-Q4', status: 'next', departmentId: 'dept-clients', description: 'Self-hosted scheduler with ungated post and channel analytics.', phaseId: 'phase-1' },
   { id: 'rm-board-embed', title: 'Board fully inside the OS', quarter: '2026-Q4', status: 'later', departmentId: 'dept-tech', description: 'Conductor and 40+ agents driven from the OS, SOPs running as real skills.', phaseId: 'phase-3' },
 ];
@@ -1116,13 +1129,13 @@ const phases: Phase[] = [
   { id: 'phase-4', number: 4, title: 'Dedicated Host', items: ['Migrate compute', 'Remote access + auth', '24/7 uptime'] },
 ];
 
-// The @founderos.ai footprint, handles straight from the Postly config.
+// The @LEO.ai footprint, handles straight from the Postly config.
 const socialAccounts: SocialAccount[] = [
-  { platform: 'instagram', handle: '@founderos.ai', url: 'https://instagram.com/founderos.ai', order: 1 },
-  { platform: 'tiktok', handle: '@founderos.ai', url: 'https://tiktok.com/@founderos.ai', order: 2 },
-  { platform: 'twitter', handle: '@Founderosai', url: 'https://x.com/Founderosai', order: 3 },
-  { platform: 'youtube', handle: '@founderosai', url: 'https://youtube.com/@founderosai', order: 4 },
-  { platform: 'linkedin', handle: 'Alex', url: null, order: 5 },
+  { platform: 'instagram', handle: '@RiderMugu', url: 'https://instagram.com/RiderMugu', order: 1 },
+  { platform: 'tiktok', handle: '@RiderMugunthKumar', url: 'https://tiktok.com/@RiderMugunthKumar', order: 2 },
+  { platform: 'twitter', handle: '@RiderMugunthan', url: 'https://x.com/RiderMugunthan', order: 3 },
+  { platform: 'youtube', handle: '@RiderMugunthKumar', url: 'https://youtube.com/@RiderMugunthKumar', order: 4 },
+  { platform: 'linkedin', handle: 'Rider', url: null, order: 5 },
 ];
 
 // Demo follower counts. LinkedIn has no baseline in this demo, so it gets
@@ -1166,11 +1179,11 @@ function ramp(start: number, end: number, seed: number): number[] {
 // Demo current follower counts; LinkedIn history is fully DUMMY. Each
 // platform ramps up to its current value.
 const FOLLOWER_TARGETS: { platform: SocialAccount['platform']; start: number; end: number }[] = [
-  { platform: 'instagram', start: 30000, end: 42000 },
-  { platform: 'tiktok', start: 6000, end: 12000 },
-  { platform: 'twitter', start: 3000, end: 5200 },
-  { platform: 'youtube', start: 300, end: 900 },
-  { platform: 'linkedin', start: 800, end: 1500 },
+  { platform: 'instagram', start: 100, end: 150 },
+  { platform: 'tiktok', start: 20, end: 50 },
+  { platform: 'twitter', start: 10, end: 25 },
+  { platform: 'youtube', start: 900, end: 950 },
+  { platform: 'linkedin', start: 0, end: 0 },
 ];
 
 const socialBaseline: SocialSnapshot[] = FOLLOWER_TARGETS.flatMap((t, ti) =>
@@ -1200,11 +1213,11 @@ const emailListBaseline: EmailListSnapshot[] = emailListDates.map((capturedAt, i
 
 // DM counts — DUMMY until a DMFlow/Postly source is wired. Current totals…
 const DM_TARGETS: { platform: SocialDm['platform']; start: number; end: number }[] = [
-  { platform: 'instagram', start: 800, end: 1200 },
-  { platform: 'tiktok', start: 200, end: 400 },
-  { platform: 'twitter', start: 120, end: 200 },
-  { platform: 'youtube', start: 25, end: 60 },
-  { platform: 'linkedin', start: 45, end: 90 },
+  { platform: 'instagram', start: 0, end: 0 },
+  { platform: 'tiktok', start: 0, end: 0 },
+  { platform: 'twitter', start: 0, end: 0 },
+  { platform: 'youtube', start: 0, end: 0 },
+  { platform: 'linkedin', start: 0, end: 0 },
 ];
 const socialDms: SocialDm[] = DM_TARGETS.map((t) => ({
   platform: t.platform,
@@ -1215,22 +1228,8 @@ const socialDms: SocialDm[] = DM_TARGETS.map((t) => ({
 // Instagram DM inbox — realistic seeded conversations so the /social DM tab is
 // alive on a fresh clone. DUMMY until the DMFlow webhook feeds it live
 // (source 'seed-dummy'; real messages arrive as source 'dmflow'). Four
-// threads, inbound + outbound, believable Vantage / FounderOS lead-gen tone.
-const socialDmMessages: SocialDmMessage[] = [
-  // Alex — agency owner off a reel
-  ['ig-alex', 'Alex', 'alex', 'in', 'saw your reel on the 3-agent setup 🔥 do you actually work with agencies?', null, '2026-07-18T14:02:00.000Z'],
-  ['ig-alex', 'Alex', 'alex', 'out', 'appreciate it! yeah — agencies are exactly who Vantage is built for. what are you running right now?', null, '2026-07-18T14:09:00.000Z'],
-  ['ig-alex', 'Alex', 'alex', 'in', 'SMMA, ~12 clients, drowning in fulfillment tbh 😅', null, '2026-07-18T14:15:00.000Z'],
-  // Jordan — keyword flow "SCALE"
-  ['ig-jordan', 'Jordan Blake', 'jordanbuilds', 'in', 'SCALE', 'SCALE', '2026-07-18T12:41:00.000Z'],
-  ['ig-jordan', 'Jordan Blake', 'jordanbuilds', 'out', 'boom 💥 here’s the free breakdown → founderos.ai/scale. want me to show how it maps to your funnel?', 'SCALE', '2026-07-18T12:41:20.000Z'],
-  ['ig-jordan', 'Jordan Blake', 'jordanbuilds', 'in', 'yes pls', null, '2026-07-18T13:05:00.000Z'],
-  // Priya — story reply
-  ['ig-priya', 'Priya N', 'priya.builds', 'in', 'replied to your story — I want OUT of retainer hell 😩', null, '2026-07-17T21:12:00.000Z'],
-  ['ig-priya', 'Priya N', 'priya.builds', 'out', 'lol felt. that’s the whole thesis. what’s your current model — retainers or projects?', null, '2026-07-17T21:30:00.000Z'],
-  // Sam — pricing question (unreplied → shows as needing attention)
-  ['ig-sam', 'Sam Ortiz', 'sam.ortiz.co', 'in', 'what does pricing look like for the done-for-you build?', null, '2026-07-18T15:48:00.000Z'],
-].map(([subscriberId, name, handle, direction, text, tag, ts], i) => ({
+// threads, inbound + outbound, believable Vantage / LEO lead-gen tone.
+const socialDmMessages: SocialDmMessage[] = ([] as [string, string, string, string, string, string | null, string][]).map(([subscriberId, name, handle, direction, text, tag, ts], i) => ({
   id: `dm-${subscriberId}-${i}`,
   platform: 'instagram' as const,
   subscriberId: subscriberId as string,
@@ -1533,7 +1532,7 @@ const workflows: Workflow[] = [
         detail: '',
         branch: null,
         ownerKind: 'human',
-        owner: 'Alex · Founder',
+        owner: 'Rider · LEO',
         hoursPerWeek: 4,
         tools: ['calendar', 'ledger'],
         edgeLabel: 'demo',
@@ -1546,7 +1545,7 @@ const workflows: Workflow[] = [
         detail: '',
         branch: null,
         ownerKind: 'human',
-        owner: 'Alex · Founder',
+        owner: 'Rider · LEO',
         hoursPerWeek: 10,
         tools: ['ledger'],
         edgeLabel: 'proposal',
@@ -1559,7 +1558,7 @@ const workflows: Workflow[] = [
         detail: '',
         branch: null,
         ownerKind: 'human',
-        owner: 'Alex · Founder',
+        owner: 'Rider · LEO',
         hoursPerWeek: 5,
         tools: ['proposal-gen', 'gmail'],
         edgeLabel: 'won',
@@ -1620,7 +1619,7 @@ const workflows: Workflow[] = [
         detail: '',
         branch: null,
         ownerKind: 'human',
-        owner: 'Alex · Founder',
+        owner: 'Rider · LEO',
         hoursPerWeek: 8,
         tools: ['ghl', 'calendar'],
         edgeLabel: 'closed',
@@ -1843,9 +1842,9 @@ export const SEEDED_PROPOSALS: Proposal[] = [];
  * or adding a proposal would land on a fresh clone and silently never reach the
  * host, whose database already has the old rows. Re-syncing here is cheap (a
  * handful of rows) and safe: seeded rows are replaced by id, and anything
- * Alex adds through the OS carries origin 'os' and is left alone.
+ * Rider adds through the OS carries origin 'os' and is left alone.
  */
-export function syncSeededProposals(db: FounderDb): void {
+export function syncSeededProposals(db: LEODb): void {
   for (const p of SEEDED_PROPOSALS) db.proposals.insert(p);
   db.proposals.deleteSeededNotIn(SEEDED_PROPOSALS.map((p) => p.id));
 }
@@ -1920,6 +1919,30 @@ export const seededCrons: AgentCron[] = [
     enabled: true,
     createdAt: '2026-08-18T00:00:00.000Z',
   },
+  {
+    id: 'cron-dm-auto-reply',
+    agentId: 'dmflow-mcp',
+    schedule: '*/5 * * * *',
+    description: 'Autonomous DM replier: scans WhatsApp and Instagram DMs every 5 minutes and drafts responses via Local LLM.',
+    enabled: true,
+    createdAt: '2026-10-04T00:00:00.000Z',
+  },
+  {
+    id: 'cron-postly-auto-publish',
+    agentId: 'postly-publisher',
+    schedule: '0 */4 * * *',
+    description: 'Autonomous content engine: generates and publishes social posts every 4 hours using Local LLM.',
+    enabled: true,
+    createdAt: '2026-10-04T00:00:00.000Z',
+  },
+  {
+    id: 'cron-jarvis-system-monitor',
+    agentId: 'jarvis-system-monitor',
+    schedule: '*/2 * * * *',
+    description: 'Jarvis Protocol: Scans system resources, memory, and checks for anomalies every 2 minutes.',
+    enabled: true,
+    createdAt: '2026-10-05T00:00:00.000Z',
+  },
 ];
 
 /**
@@ -1932,9 +1955,9 @@ export const seededCrons: AgentCron[] = [
  * because nothing ever re-ran the seed. The stamp forces exactly one re-seed
  * per change.
  */
-export const SEED_VERSION = '2026-09-30-alex-first-name';
+export const SEED_VERSION = '2026-10-05-Jarvis-Protocol';
 
-export function seedDatabase(db: FounderDb): void {
+export function seedDatabase(db: LEODb): void {
   // INSERT OR REPLACE in every repo makes re-seeding idempotent by id.
   for (const c of seededCrons) db.agentCrons.insert(c);
   for (const d of departments) db.departments.insert(d);

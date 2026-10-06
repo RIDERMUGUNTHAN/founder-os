@@ -1,8 +1,9 @@
 {
-  "name": "founder-os",
+  "name": "leo",
   "version": "1.0.0",
   "private": true,
-  "description": "FOUNDER OS — personal operating system and AI agent command center",
+  "description": "LEO — personal operating system and AI agent command center",
+  "main": "electron/main.cjs",
   "engines": {
     "node": "22.x"
   },
@@ -10,6 +11,11 @@
     "dev": "next dev -p 4100",
     "build": "next build",
     "start": "next start -p 4100",
+    "electron:dev": "concurrently \"next dev -p 4100\" \"wait-on tcp:4100 && cross-env NODE_ENV=development electron .\"",
+    "electron:build": "next build && electron-builder --win",
+    "mobile:sync": "cap sync",
+    "mobile:android": "cap open android",
+    "mobile:ios": "cap open ios",
     "test": "vitest run",
     "test:watch": "vitest",
     "typecheck": "tsc --noEmit",
@@ -17,6 +23,14 @@
     "brain:docs": "tsx scripts/generate-brain-docs.ts"
   },
   "dependencies": {
+    "@ai-sdk/anthropic": "^4.0.71",
+    "@ai-sdk/openai": "^4.0.83",
+    "@capacitor/camera": "^8.2.5",
+    "@capacitor/core": "^8.5.2",
+    "@capacitor/haptics": "^8.0.2",
+    "@capacitor/network": "^8.0.1",
+    "@capacitor/preferences": "^8.0.1",
+    "@capacitor/status-bar": "^8.0.4",
     "@notionhq/client": "^5.22.0",
     "@slack/web-api": "^7.16.0",
     "@types/d3-force": "^3.0.10",
@@ -35,16 +49,50 @@
     "zod": "^3.23.8"
   },
   "devDependencies": {
+    "@capacitor/android": "^8.5.2",
+    "@capacitor/cli": "^8.5.2",
+    "@capacitor/ios": "^8.5.2",
     "@types/better-sqlite3": "^7.6.11",
     "@types/node": "^22.5.5",
     "@types/nodemailer": "^8.0.1",
     "@types/react": "^18.3.8",
     "@types/react-dom": "^18.3.0",
     "autoprefixer": "^10.4.20",
+    "concurrently": "^10.0.5",
+    "cross-env": "^10.1.0",
+    "electron": "^44.5.1",
+    "electron-builder": "^26.15.3",
     "postcss": "^8.4.47",
     "tailwindcss": "^3.4.12",
     "tsx": "^4.19.1",
     "typescript": "^5.6.2",
-    "vitest": "^2.1.1"
+    "vitest": "^2.1.1",
+    "wait-on": "^9.5.1"
+  },
+  "build": {
+    "appId": "com.founderos.desktop",
+    "productName": "FounderOS",
+    "npmRebuild": false,
+    "win": {
+      "target": [
+        "nsis",
+        "portable"
+      ]
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true
+    },
+    "directories": {
+      "output": "dist-electron"
+    },
+    "files": [
+      "electron/**/*",
+      ".next/**/*",
+      "public/**/*",
+      "package.json"
+    ]
   }
 }

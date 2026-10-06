@@ -2079,5 +2079,6 @@ export function openDb(path: string) {
   };
 }
 
-export type FounderDb = ReturnType<typeof openDb>;
+export type LEODb = ReturnType<typeof openDb>;
 /** Legacy alias kept so existing call sites keep compiling. */
+export type FounderDb = LEODb;

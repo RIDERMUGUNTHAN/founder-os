@@ -180,9 +180,181 @@ export function createGatewayProvider(model?: string): LlmProvider {
   };
 }
 
+export function createLocalProvider(model?: string): LlmProvider {
+  return {
+    name: 'local',
+    async chat(req) {
+      const { generateText, tool, stepCountIs } = await import('ai');
+      const { createOpenAI } = await import('@ai-sdk/openai');
+      
+      const localUrl = process.env.LOCAL_LLM_URL || 'http://localhost:11434/v1';
+      const localKey = process.env.LOCAL_LLM_KEY || 'dummy';
+      const localModel = process.env.LOCAL_LLM_MODEL || 'llama3';
+      
+      const openai = createOpenAI({ baseURL: localUrl, apiKey: localKey });
+      
+      const tools = Object.fromEntries(
+        (req.tools ?? []).map((t) => [
+          t.name,
+          tool({ description: t.description, inputSchema: t.parameters, execute: t.execute }),
+        ]),
+      );
+      const messages = req.messages
+        .filter((m) => m.role !== 'tool')
+        .map((m) => ({ role: m.role as 'system' | 'user' | 'assistant', content: m.content }));
+
+      const result = await generateText({
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        model: openai(req.model ?? model ?? localModel) as any,
+        system: req.system,
+        messages,
+        tools: req.tools?.length ? tools : undefined,
+        stopWhen: stepCountIs(6),
+      });
+
+      const toolCalls: LlmToolCall[] = [];
+      for (const step of result.steps ?? []) {
+        const calls = step.toolCalls ?? [];
+        const results = step.toolResults ?? [];
+        for (const c of calls) {
+          const hit = results.find((r) => r.toolCallId === c.toolCallId);
+          toolCalls.push({ name: c.toolName, args: c.input, result: hit?.output });
+        }
+      }
+      return {
+        text: result.text,
+        toolCalls,
+        usage: {
+          inputTokens: result.usage?.inputTokens ?? 0,
+          outputTokens: result.usage?.outputTokens ?? 0,
+        },
+      };
+    },
+  };
+}
+
+export function createAnthropicProvider(preferredModel?: string): LlmProvider {
+  return {
+    name: 'anthropic',
+    async chat(req) {
+      const apiKey = process.env.ANTHROPIC_API_KEY;
+      if (!apiKey) {
+        throw new Error('ANTHROPIC_API_KEY is not set — add it to .env.local to enable Claude.');
+      }
+      const { generateText, tool, stepCountIs } = await import('ai');
+      const { createAnthropic } = await import('@ai-sdk/anthropic');
+
+      const anthropic = createAnthropic({ apiKey });
+      const targetModel = req.model ?? preferredModel ?? process.env.ANTHROPIC_MODEL ?? 'claude-3-7-sonnet-20250219';
+
+      const tools = Object.fromEntries(
+        (req.tools ?? []).map((t) => [
+          t.name,
+          tool({ description: t.description, inputSchema: t.parameters, execute: t.execute }),
+        ]),
+      );
+      const messages = req.messages
+        .filter((m) => m.role !== 'tool')
+        .map((m) => ({ role: m.role as 'system' | 'user' | 'assistant', content: m.content }));
+
+      const result = await generateText({
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        model: anthropic(targetModel) as any,
+        system: req.system,
+        messages,
+        tools: req.tools?.length ? tools : undefined,
+        stopWhen: stepCountIs(6),
+      });
+
+      const toolCalls: LlmToolCall[] = [];
+      for (const step of result.steps ?? []) {
+        const calls = step.toolCalls ?? [];
+        const results = step.toolResults ?? [];
+        for (const c of calls) {
+          const hit = results.find((r) => r.toolCallId === c.toolCallId);
+          toolCalls.push({ name: c.toolName, args: c.input, result: hit?.output });
+        }
+      }
+      return {
+        text: result.text,
+        toolCalls,
+        usage: {
+          inputTokens: result.usage?.inputTokens ?? 0,
+          outputTokens: result.usage?.outputTokens ?? 0,
+        },
+      };
+    },
+  };
+}
+
+export function createOpenAIProvider(preferredModel?: string): LlmProvider {
+  return {
+    name: 'openai',
+    async chat(req) {
+      const apiKey = process.env.OPENAI_API_KEY;
+      if (!apiKey) {
+        throw new Error('OPENAI_API_KEY is not set — add it to .env.local to enable OpenAI.');
+      }
+      const { generateText, tool, stepCountIs } = await import('ai');
+      const { createOpenAI } = await import('@ai-sdk/openai');
+
+      const openai = createOpenAI({ apiKey });
+      const targetModel = req.model ?? preferredModel ?? process.env.OPENAI_MODEL ?? 'gpt-4o';
+
+      const tools = Object.fromEntries(
+        (req.tools ?? []).map((t) => [
+          t.name,
+          tool({ description: t.description, inputSchema: t.parameters, execute: t.execute }),
+        ]),
+      );
+      const messages = req.messages
+        .filter((m) => m.role !== 'tool')
+        .map((m) => ({ role: m.role as 'system' | 'user' | 'assistant', content: m.content }));
+
+      const result = await generateText({
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        model: openai(targetModel) as any,
+        system: req.system,
+        messages,
+        tools: req.tools?.length ? tools : undefined,
+        stopWhen: stepCountIs(6),
+      });
+
+      const toolCalls: LlmToolCall[] = [];
+      for (const step of result.steps ?? []) {
+        const calls = step.toolCalls ?? [];
+        const results = step.toolResults ?? [];
+        for (const c of calls) {
+          const hit = results.find((r) => r.toolCallId === c.toolCallId);
+          toolCalls.push({ name: c.toolName, args: c.input, result: hit?.output });
+        }
+      }
+      return {
+        text: result.text,
+        toolCalls,
+        usage: {
+          inputTokens: result.usage?.inputTokens ?? 0,
+          outputTokens: result.usage?.outputTokens ?? 0,
+        },
+      };
+    },
+  };
+}
+
 export function getLlmProvider(): LlmProvider {
-  const name = process.env.LLM_PROVIDER ?? 'gateway';
+  const name = (process.env.LLM_PROVIDER ?? 'auto').toLowerCase();
   if (name === 'stub') return stubLlmProvider;
+  if (name === 'anthropic') return createAnthropicProvider();
+  if (name === 'openai') return createOpenAIProvider();
+  if (name === 'local') return createLocalProvider();
+  if (name === 'gateway') return createGatewayProvider();
+
+  // Auto-detect based on available credentials
+  if (process.env.ANTHROPIC_API_KEY) return createAnthropicProvider();
+  if (process.env.OPENAI_API_KEY) return createOpenAIProvider();
+  const gatewayKey = resolveGatewayKey();
+  if (gatewayKey) return createGatewayProvider();
+
   return createGatewayProvider();
 }
 
@@ -191,18 +363,38 @@ export function chat(req: LlmChatRequest): Promise<LlmChatResult> {
 }
 
 export async function llmStatus(): Promise<ConnectorStatus> {
-  if (GATED) return gatedConnected('llm', 'LLM Gateway', 'orchestration', 'Claude Sonnet · via AI Gateway');
-  const base = { id: 'llm', name: 'LLM (Gateway)', kind: 'orchestration' } as const;
-  if (process.env.LLM_PROVIDER === 'stub') {
+  if (GATED) return gatedConnected('llm', 'LLM Provider', 'orchestration', 'Claude & OpenAI Active');
+  const base = { id: 'llm', name: 'LLM Engine', kind: 'orchestration' } as const;
+
+  const providerName = (process.env.LLM_PROVIDER ?? 'auto').toLowerCase();
+
+  if (providerName === 'stub') {
     return { ...base, state: 'connected', detail: 'stub provider active (tests)' };
   }
+  if (providerName === 'anthropic' || (!process.env.LLM_PROVIDER && process.env.ANTHROPIC_API_KEY)) {
+    if (!process.env.ANTHROPIC_API_KEY) {
+      return { ...base, state: 'not_configured', detail: 'Set ANTHROPIC_API_KEY in .env.local to activate Claude 3.7 / 3.5 Sonnet.' };
+    }
+    return { ...base, state: 'connected', detail: `Anthropic Claude (${process.env.ANTHROPIC_MODEL ?? 'claude-3-7-sonnet'}) Active` };
+  }
+  if (providerName === 'openai' || (!process.env.LLM_PROVIDER && process.env.OPENAI_API_KEY)) {
+    if (!process.env.OPENAI_API_KEY) {
+      return { ...base, state: 'not_configured', detail: 'Set OPENAI_API_KEY in .env.local to activate GPT-4o / o3-mini.' };
+    }
+    return { ...base, state: 'connected', detail: `OpenAI (${process.env.OPENAI_MODEL ?? 'gpt-4o'}) Active` };
+  }
+  if (providerName === 'local') {
+    return { ...base, name: 'LLM (Local)', state: 'connected', detail: `Local provider: ${process.env.LOCAL_LLM_URL || 'http://localhost:11434/v1'} model: ${process.env.LOCAL_LLM_MODEL || 'llama3'}` };
+  }
+
   const key = resolveGatewayKey();
-  if (!key) {
+  if (!key && !process.env.ANTHROPIC_API_KEY && !process.env.OPENAI_API_KEY) {
     return {
       ...base,
       state: 'not_configured',
-      detail: 'Set AI_GATEWAY_API_KEY in .env.local to enable agent chat via the Vercel AI Gateway.',
+      detail: 'Set ANTHROPIC_API_KEY, OPENAI_API_KEY, or AI_GATEWAY_API_KEY in .env.local to enable AI agents.',
     };
   }
-  return { ...base, state: 'connected', detail: `Vercel AI Gateway · default model ${defaultModel()}` };
+  return { ...base, state: 'connected', detail: `AI Gateway · model ${defaultModel()}` };
 }
+

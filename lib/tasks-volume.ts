@@ -6,7 +6,7 @@ import type { PaperclipIssue } from '@/lib/connectors/paperclip';
 import { shortLabels } from '@/lib/short-labels';
 
 /**
- * /tasks in the Brand Deals look (Alex, 2026-09-24). One pure pass over the
+ * /tasks in the Brand Deals look (Rider, 2026-09-24). One pure pass over the
  * page's own rows (the local kanban, the live Paperclip board issues, the
  * scheduled jobs and the real cron_runs history) gives the Task Volume
  * headline and meters, the work-activity step line, the cron weekday rhythm,
@@ -148,7 +148,7 @@ export function tasksVolume(x: TasksVolumeInput): TasksVolume {
   const busiestOwner = ranked.length ? { name: names[0], count: ranked[0][1] } : null;
   const agentsOnKanban = new Set(x.tasks.map((t) => t.agentId)).size;
 
-  // The one gradient card: what is waiting on Alex right now.
+  // The one gradient card: what is waiting on Rider right now.
   const late = x.jobs.filter(jobNeedsYou);
   const value = counts.review + board.blocked + late.length;
   const parts: string[] = [];

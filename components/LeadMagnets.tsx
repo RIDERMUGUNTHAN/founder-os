@@ -4,7 +4,7 @@ import { LeadMagnetRowActions } from '@/components/LeadMagnetRowActions';
 import type { LeadMagnet } from '@/lib/schemas';
 
 /**
- * Lead magnets, as a Notion-style database (Alex, 2026-08-13: he is
+ * Lead magnets, as a Notion-style database (Rider, 2026-08-13: he is
  * retiring Notion and running this out of the OS). A property table, not
  * cards: name + offer, status pill, what it captures, where the leads land,
  * and the campaign it was built for. Every row opens the real page.

@@ -2,7 +2,7 @@ import type { Meter, Tone } from '@/components/slab';
 import type { SeriesPoint } from '@/components/slab-charts';
 
 /**
- * /social in the Brand Deals look (Alex, 2026-09-24). One pure pass over
+ * /social in the Brand Deals look (Rider, 2026-09-24). One pure pass over
  * the page's own real rows (channel follower counts, audience growth, the
  * Instagram DM threads, the publish queue, Zernio's posting history) gives
  * the Audience Volume card, the posting step line, the platform mix and the

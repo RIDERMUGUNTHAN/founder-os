@@ -1,5 +1,5 @@
 /**
- * Alex's two active income sources — the venture lens over the OS.
+ * Rider's two active income sources — the venture lens over the OS.
  *
  * One database, one G-Brain, one agent roster: ventures never partition the
  * data. They are saved filters — each one names the agents that serve it per
@@ -21,7 +21,7 @@ export type Venture = {
   detail: string;
   /** Tag that marks this venture's pages inside the single shared G-Brain. */
   brainTag: string;
-  /** Current executive priorities — edit freely, this is Alex's list. */
+  /** Current executive priorities — edit freely, this is Rider's list. */
   focus: string[];
   /** life-area id → the agents working that area FOR this venture. */
   areaAgents: Record<string, string[]>;
@@ -92,7 +92,7 @@ export function venturesForAgent(agentId: string): Venture[] {
   return VENTURES.filter((v) => ventureAgentSet(v.id).has(agentId));
 }
 
-/** Agents on one life area for one venture (the click-through Alex described). */
+/** Agents on one life area for one venture (the click-through Rider described). */
 export function ventureAreaAgents(ventureId: string, areaId: string): string[] {
   return getVenture(ventureId)?.areaAgents[areaId] ?? [];
 }

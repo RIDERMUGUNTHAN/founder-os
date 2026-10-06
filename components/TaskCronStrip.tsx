@@ -6,7 +6,7 @@ import { scheduledJobRows, type CronStat } from '@/lib/scheduled-jobs';
 import type { AgentCron } from '@/lib/schemas';
 
 /**
- * Scheduled jobs on /tasks (Alex, 2026-08-18: "make the cron jobs show up
+ * Scheduled jobs on /tasks (Rider, 2026-08-18: "make the cron jobs show up
  * in tasks and in workflows ... keep data on it: how many times this runs"),
  * reshaped for mock 5f into a compact card grid: square status dot, job name,
  * cadence plus the next fire, and the ok/runs count. A failing job reads red.

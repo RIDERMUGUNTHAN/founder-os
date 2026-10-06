@@ -3,7 +3,7 @@ import type { SeriesPoint } from '@/components/slab-charts';
 import { newsletterSummary, type Newsletter } from '@/lib/newsletters';
 
 /**
- * /social/beehiiv in the Brand Deals look (Alex, 2026-09-24). One pure
+ * /social/beehiiv in the Brand Deals look (Rider, 2026-09-24). One pure
  * pass over the page's own rows (the Beehiiv subscriber count and the past
  * issues) gives the Newsletter Volume card, the sends step line, the
  * open-rate dot matrix and the one "Best open" card. The funnel meters are

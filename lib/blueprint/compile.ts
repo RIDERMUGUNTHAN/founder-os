@@ -1,4 +1,4 @@
-import type { FounderDb } from '@/lib/db';
+import type { LEODb } from '@/lib/db';
 import { realAgents } from '@/lib/agents/real';
 import { allConnectorStatuses } from '@/lib/connectors';
 import { llmStatus, modelChain } from '@/lib/connectors/llm';
@@ -25,7 +25,7 @@ import {
  * federated brain, and the daemons are the ones this OS actually names.
  */
 
-const OPERATOR_NAME = process.env.FOUNDER_OPERATOR_NAME?.trim() || 'the operator';
+const OPERATOR_NAME = process.env.LEO_OPERATOR_NAME?.trim() || 'the operator';
 
 /** Static infrastructure inventory: the only hand-listed layer, because hosts
  *  live outside this repo's registries. Keep tiny and factual. */
@@ -35,7 +35,7 @@ const HOSTS: BlueprintNode[] = [
 ];
 
 const STORES: BlueprintNode[] = [
-  { id: 'store-db', kind: 'store', name: 'OS database', layer: 4, status: 'live', blurb: 'Agents, runs, departments, workflows, crons, metrics (SQLite).', facts: { path: 'data/founder-os.db' }, icon: 'database' },
+  { id: 'store-db', kind: 'store', name: 'OS database', layer: 4, status: 'live', blurb: 'Agents, runs, departments, workflows, crons, metrics (SQLite).', facts: { path: 'data/LEO-os.db' }, icon: 'database' },
   { id: 'store-ledger', kind: 'store', name: 'Ledger', layer: 4, status: 'live', blurb: 'Statement events and income by business (SQLite).', facts: { path: 'data/ledger.db' }, icon: 'database' },
   { id: 'store-bank', kind: 'store', name: 'Bank', layer: 4, status: 'live', blurb: 'Uploaded statements and the bank line items (SQLite).', facts: { path: 'data/bank.db' }, icon: 'database' },
   { id: 'store-candles', kind: 'store', name: 'Candles', layer: 4, status: 'live', blurb: 'Crypto and ETF candles the trading backtests read.', facts: { path: 'data/candles/' }, icon: 'list' },
@@ -215,7 +215,7 @@ export type CompileOptions = {
   llm?: ConnectorStatus;
 };
 
-export async function compileBlueprint(db: FounderDb, opts: CompileOptions = {}): Promise<BlueprintGraph> {
+export async function compileBlueprint(db: LEODb, opts: CompileOptions = {}): Promise<BlueprintGraph> {
   const nodes: BlueprintNode[] = [];
   const edges: BlueprintEdge[] = [];
   const runtimeIds = new Set(realAgents.map((a) => a.id));

@@ -5,7 +5,7 @@ import type { ZernioPost, ZernioPostDay } from '@/lib/connectors/zernio';
 import { shortLabels } from '@/lib/short-labels';
 
 /**
- * /content in the Brand Deals look (Alex, 2026-09-24). One pure pass over
+ * /content in the Brand Deals look (Rider, 2026-09-24). One pure pass over
  * the page's own rows (the content crew, their real agent runs, the lead
  * magnets table, the Zernio recent pull and its posting history) gives the
  * Content Volume headline and meters, the posting step line, the crew-runs

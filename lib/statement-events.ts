@@ -9,6 +9,6 @@
  * import it (tests/client-boundary.test.ts).
  */
 
-export const STATEMENT_UPLOADED = 'founder-os:statement-uploaded';
+export const STATEMENT_UPLOADED = 'LEO-os:statement-uploaded';
 
 export type StatementUploadedDetail = { months: string[] };

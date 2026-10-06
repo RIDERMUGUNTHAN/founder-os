@@ -30,7 +30,7 @@ export async function GET(req: Request) {
         () =>
           resolve({
             title: screenTitleFor(path),
-            context: `${screenTitleFor(path)} view of Founder OS.`,
+            context: `${screenTitleFor(path)} view of LEO — AI Personal Assistant. Operator: Rider.`,
             quickActions: quickActionsFor(path),
           }),
         CONTEXT_BUDGET_MS,

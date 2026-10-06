@@ -10,7 +10,7 @@ import type { SopTask } from '@/lib/schemas';
  * (BUILDS ON), states what it displaces (WHAT IT REPLACES), and carries the
  * autonomy ladder (human-led → human-assisted → fully-autonomous), the human's
  * role, build notes, a runnable skill file, and a build status. Skill file
- * bodies are generated dummy SKILL.md for now (Alex: "dummy data for the
+ * bodies are generated dummy SKILL.md for now (Rider: "dummy data for the
  * skills for now").
  */
 
@@ -261,7 +261,7 @@ const PLAYBOOKS: Record<string, SopPlaybook> = {
   'sop-postly-publisher': {
     autonomy: 'fully-autonomous',
     categoryPath: 'Marketing · Cross-Platform Publishing',
-    description: 'One queue out to every @alexx.ai surface with per-platform captions.',
+    description: 'One queue out to every @Riderx.ai surface with per-platform captions.',
     breaksInto: ['caption-adapter', 'multi-publish', 'post-verifier'],
     buildsOn: ['Content Pipeline Runner', 'Postly API'],
     replaces: 'Manually reposting the same clip to six apps with tweaked captions.',

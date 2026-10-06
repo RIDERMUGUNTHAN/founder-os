@@ -14,7 +14,7 @@ const WINDOW_WEEKS = 12;
 /**
  * Lead magnets, full page, in the Brand Deals slab (2026-09-24). Every landing
  * page we ship, as a Notion-style database with the real link on every row
- * so Alex can open or copy one straight to whoever asked for it. Every
+ * so Rider can open or copy one straight to whoever asked for it. Every
  * number above the table comes from lib/lead-magnet-volume over ALL rows; the
  * status pills (?status=live) only narrow the table.
  */

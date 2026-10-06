@@ -65,7 +65,7 @@ const MIN_BAND_GAP = 48;
  *
  * The task fan is capped by the ≤45° cone, not by the canvas, so a dense
  * department runs out of horizontal room long before it runs out of width:
- * Sales went to 9 SOPs when Alex's real closer and two setters landed
+ * Sales went to 9 SOPs when Rider's real closer and two setters landed
  * and its limbs closed to 39px. Staggering every other limb
  * upward buys the diagonal distance back, and lifting (never dropping) means
  * the lean only ever gets gentler, so the 45° cap still holds.
@@ -143,7 +143,7 @@ export type RestLayoutResult = { positions: Map<string, Pt> };
 // the SOP-task ring slots between the teams and the workers — spaced so the
 // outer (tool) ring keeps label headroom on an 880×600 canvas. Scaling by the
 // smaller dimension keeps every ring on-canvas on any aspect ratio.
-// Alex: nudged the department ring out (90 → 105) for a touch
+// Rider: nudged the department ring out (90 → 105) for a touch
 // more clear water between the pillars and the center brain.
 const RING_FRAC = [0, 105 / 600, 152 / 600, 200 / 600, 248 / 600];
 
@@ -225,7 +225,7 @@ export function treeLayout(input: TreeLayoutInput): TreeLayoutResult {
 
   // The department head rides the trunk between the department and its SOP
   // fan — the dotted hop (dept ⇢ head), then every task limb grows from the
-  // head (Alex,: dept → head → SOPs, for every pillar).
+  // head (Rider,: dept → head → SOPs, for every pillar).
   if (headId) {
     positions.set(headId, { x: cx, y: (yOf(1) + yOf(2)) / 2, depth: 1.5 });
     branches.push({ source: teamId, target: headId, depth: 2, dashed: true });
@@ -324,7 +324,7 @@ export type FocusWheel = { hub: Pt; scale: number; stage: number; squeeze: numbe
  * rigid wheel the neighbors would hang ~60° down the rim (below the canvas),
  * so a step read as "rising from the bottom". Squeezed, the neighbors hold at
  * the canvas SIDES and a turn sweeps laterally along the top arc — the motion
- * Alex asked for: from left and right, not from below.
+ * Rider asked for: from left and right, not from below.
  */
 export function focusWheel(width: number, height: number, ringR: number[]): FocusWheel {
   const hub = { x: width / 2, y: height * 1.3 };

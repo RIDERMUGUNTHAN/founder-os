@@ -17,7 +17,7 @@ const monthName = (month: string): string =>
   new Date(`${month}-01T00:00:00Z`).toLocaleDateString('en-US', { month: 'short', year: 'numeric', timeZone: 'UTC' });
 
 /**
- * Monthly expenses (Alex, 2026-08-26): the pie is per month, not a frozen
+ * Monthly expenses (Rider, 2026-08-26): the pie is per month, not a frozen
  * latest-month snapshot  -  stepping months redraws it from the ledger rows the
  * server handed down, and the full expenditure statement opens over the page.
  * With no statements uploaded it falls back to the declared set fees, honestly

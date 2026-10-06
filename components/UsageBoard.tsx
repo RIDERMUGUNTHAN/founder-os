@@ -4,7 +4,7 @@
  * The live token-burn board. Polls /api/usage every 10s -- the refresh path
  * is pure file parsing on the server, so polling costs nothing billable.
  *
- * One card per plan Alex pays for (one Claude plan, one ChatGPT plan, one
+ * One card per plan Rider pays for (one Claude plan, one ChatGPT plan, one
  * Ollama plan), each with the active plan name, the official gauges when the
  * provider exposes them, and the burn for the last hour, the 5-hour session,
  * today and the week. Clicking a card opens where those tokens went: the

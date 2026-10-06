@@ -6,7 +6,7 @@ import { workflowStats } from '@/lib/workflow-stats';
 import { shortLabels } from '@/lib/short-labels';
 
 /**
- * /workflows in the Brand Deals look (Alex, 2026-09-24). One pure pass over
+ * /workflows in the Brand Deals look (Rider, 2026-09-24). One pure pass over
  * the page's own rows (the scheduled jobs, the workflows table and the real
  * cron_runs history) produces every number the slab shows: the Cron Volume
  * headline and meters, the run-activity step line, the weekday rhythm, the
@@ -144,7 +144,7 @@ export function workflowsVolume(x: {
   const names = shortLabels(x.workflows.map((w) => w.name), /\s+/, Infinity, 'Workflow');
   const perWorkflow = stats.map((s, i) => ({ label: names[i], count: hours(s.manualHours) }));
 
-  // The one gradient card: what is waiting on Alex right now.
+  // The one gradient card: what is waiting on Rider right now.
   const needs = x.jobs.filter((_, i) => states[i] === 'overdue' || states[i] === 'failing');
   const insight = {
     value: needs.length,

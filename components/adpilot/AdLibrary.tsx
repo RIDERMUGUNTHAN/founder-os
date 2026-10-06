@@ -530,7 +530,7 @@ function SearchTab({
           value={concept}
           onChange={(e) => setConcept(e.target.value)}
           onKeyDown={(e) => e.key === 'Enter' && run()}
-          placeholder="founders replacing staff with AI agents"
+          placeholder="LEOs replacing staff with AI agents"
           className="min-w-0 flex-1 bg-transparent px-1 py-2 text-[14px] text-os-text outline-none placeholder:text-os-dim"
         />
         <button type="button" onClick={run} disabled={state.phase === 'running' || concept.trim().length < 3} className="pressable c-btn c-btn-primary flex items-center gap-1.5 text-[12.5px]">
@@ -794,7 +794,7 @@ function Dossier({
       },
     };
     try {
-      sessionStorage.setItem('founder:remake', JSON.stringify(payload));
+      sessionStorage.setItem('LEO:remake', JSON.stringify(payload));
     } catch {
       /* storage unavailable: the composer just opens blank */
     }

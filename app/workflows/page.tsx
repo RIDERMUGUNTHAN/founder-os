@@ -19,7 +19,7 @@ const WINDOW_DAYS = 14;
 
 /**
  * Two halves. The clock half (scheduled tasks, real crons, real run history)
- * is Alex's and stays first. The process-map half is the GladOS tree
+ * is Rider's and stays first. The process-map half is the GladOS tree
  * (imported 2026-09-17): collapsed cards that expand into a vertical tree
  * with real forks, a step-detail drawer, and a builder that writes the same
  * workflows table.

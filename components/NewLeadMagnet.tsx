@@ -6,7 +6,7 @@ import { Plus, X } from 'lucide-react';
 import { PILL, PILL_ACCENT } from '@/components/slab';
 
 /**
- * Create a lead magnet from inside the OS (Alex, 2026-08-14). Deploy the
+ * Create a lead magnet from inside the OS (Rider, 2026-08-14). Deploy the
  * page wherever, then register it here so the row lives with everything else.
  * The Content Gen skill posts to the same route, so a page it ships lands in
  * this table without anyone typing.

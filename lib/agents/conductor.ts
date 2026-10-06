@@ -7,7 +7,7 @@
  */
 import { chat as llmChat } from '@/lib/connectors/llm';
 import { chatWithAgent, type ChatResult } from '@/lib/agents/chat';
-import type { FounderDb } from '@/lib/db';
+import type { LEODb } from '@/lib/db';
 import type { RuntimeAgent } from '@/lib/agents/runtime';
 
 export type ConductorResult = ChatResult & { routedTo: string };
@@ -23,23 +23,20 @@ function matchAgent(agents: RuntimeAgent[], token: string): RuntimeAgent | undef
   return agents.find((a) => a.id === token || a.id === t || slug(a.name) === t);
 }
 
+import { CONDUCTOR_ROUTER_PROMPT } from '@/lib/prompts/founder-prompts';
+
 /** Ask the model for the single best-fit agent id; fall back to the first agent. */
 async function pickAgent(routable: RuntimeAgent[], message: string): Promise<string> {
   const roster = routable.map((a) => `- ${a.id}: ${a.name} — ${a.description}`).join('\n');
-  const system = [
-    'You are the Conductor, the router for Founder OS operator agents.',
-    'Pick the single best-fit agent for the user message.',
-    'Reply with ONLY that agent id and nothing else. Options:',
-    roster,
-  ].join('\n');
+  const system = `${CONDUCTOR_ROUTER_PROMPT}\n\nAVAILABLE AGENT ROSTER:\n${roster}`;
   const res = await llmChat({ system, messages: [{ role: 'user', content: message }] });
-  const picked = (res.text.trim().split(/\s+/)[0] ?? '').replace(/[^a-zA-Z0-9_-]/g, '');
-  const found = routable.find((a) => a.id === picked);
+  const picked = (res.text.trim().split(/\s+/)[0] ?? '').replace(/[^a-zA-Z0-9_-]/g, '').toLowerCase();
+  const found = routable.find((a) => a.id.toLowerCase() === picked);
   return (found ?? routable[0]).id;
 }
 
 export async function routeConductorMessage(
-  db: FounderDb,
+  db: LEODb,
   agents: RuntimeAgent[],
   message: string,
   opts: { screenContext?: string } = {},

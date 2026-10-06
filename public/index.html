@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <title>FounderOS Mobile</title>
+  <style>
+    :root {
+      --bg: #09090b;
+      --card-bg: #121215;
+      --card-border: #222227;
+      --accent: #22c55e;
+      --accent-soft: rgba(34, 197, 94, 0.12);
+      --text: #f4f4f5;
+      --muted: #a1a1aa;
+      --dim: #52525b;
+    }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "JetBrains Mono", monospace;
+      -webkit-tap-highlight-color: transparent;
+    }
+    body {
+      background-color: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      padding-top: env(safe-area-inset-top, 16px);
+      padding-bottom: env(safe-area-inset-bottom, 24px);
+    }
+    .header {
+      padding: 16px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid var(--card-border);
+    }
+    .logo-badge {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 15px;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+    }
+    .status-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--accent);
+      box-shadow: 0 0 10px var(--accent);
+    }
+    .container {
+      flex: 1;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      max-width: 480px;
+      margin: 0 auto;
+      width: 100%;
+    }
+    .card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 12px;
+      padding: 18px;
+    }
+    .card-title {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--muted);
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .server-status {
+      font-size: 13px;
+      color: var(--text);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .input-field {
+      width: 100%;
+      background: #000;
+      border: 1px solid var(--card-border);
+      color: var(--text);
+      padding: 12px 14px;
+      border-radius: 8px;
+      font-size: 14px;
+      font-family: monospace;
+      margin-top: 8px;
+      outline: none;
+    }
+    .input-field:focus {
+      border-color: var(--accent);
+    }
+    .btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      width: 100%;
+      padding: 13px;
+      border-radius: 8px;
+      border: none;
+      font-weight: 600;
+      font-size: 14px;
+      cursor: pointer;
+      margin-top: 10px;
+      transition: all 0.15s ease;
+    }
+    .btn-primary {
+      background: var(--text);
+      color: #000;
+    }
+    .btn-primary:active {
+      transform: scale(0.98);
+      opacity: 0.9;
+    }
+    .btn-accent {
+      background: var(--accent);
+      color: #000;
+    }
+    .btn-accent:active {
+      transform: scale(0.98);
+    }
+    .btn-outline {
+      background: transparent;
+      border: 1px solid var(--card-border);
+      color: var(--text);
+    }
+    .btn-outline:active {
+      background: rgba(255, 255, 255, 0.05);
+    }
+    .actions-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+    .action-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 10px;
+      padding: 16px;
+      text-align: center;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      transition: border-color 0.15s;
+    }
+    .action-card:active {
+      border-color: var(--accent);
+      background: var(--accent-soft);
+    }
+    .action-icon {
+      font-size: 22px;
+    }
+    .action-label {
+      font-size: 13px;
+      font-weight: 500;
+    }
+    .notes-list {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin-top: 10px;
+      max-height: 180px;
+      overflow-y: auto;
+    }
+    .note-item {
+      background: #000;
+      padding: 10px 12px;
+      border-radius: 6px;
+      font-size: 13px;
+      border-left: 3px solid var(--accent);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .note-time {
+      font-size: 10px;
+      color: var(--dim);
+    }
+    .tabs {
+      display: flex;
+      gap: 6px;
+      background: #000;
+      padding: 4px;
+      border-radius: 8px;
+      border: 1px solid var(--card-border);
+    }
+    .tab-btn {
+      flex: 1;
+      padding: 8px 12px;
+      text-align: center;
+      font-size: 12px;
+      font-weight: 600;
+      border-radius: 6px;
+      border: none;
+      background: transparent;
+      color: var(--muted);
+      cursor: pointer;
+    }
+    .tab-btn.active {
+      background: var(--card-bg);
+      color: var(--text);
+    }
+    #photoPreview {
+      display: none;
+      width: 100%;
+      height: 140px;
+      object-fit: cover;
+      border-radius: 8px;
+      margin-top: 10px;
+      border: 1px solid var(--card-border);
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <div class="logo-badge">
+      <div class="status-dot" id="statusDot"></div>
+      <span>FOUNDER OS</span>
+    </div>
+    <div style="font-size: 12px; color: var(--muted);" id="modeLabel">Companion Mode</div>
+  </div>
+
+  <div class="container">
+    <div class="tabs">
+      <button class="tab-btn active" id="tabCompanion" onclick="setMode('companion')">Companion Link</button>
+      <button class="tab-btn" id="tabStandalone" onclick="setMode('standalone')">Standalone Capture</button>
+    </div>
+
+    <!-- COMPANION MODE SECTION -->
+    <div id="sectionCompanion" class="card">
+      <div class="card-title">
+        <span>Windows Desktop Connection</span>
+        <span id="connBadge" style="color: var(--accent);">READY</span>
+      </div>
+      <div style="font-size: 13px; color: var(--muted); line-height: 1.4;">
+        Connect to your Windows FounderOS instance to stream live agent runs, pulse, finances, and unified comms.
+      </div>
+      <input type="text" id="desktopUrlInput" class="input-field" placeholder="http://192.168.1.50:4100" />
+      <button class="btn btn-accent" onclick="connectToDesktop()">Open Command Center</button>
+      <button class="btn btn-outline" onclick="testConnection()">Test Connection</button>
+    </div>
+
+    <!-- STANDALONE CAPTURE SECTION -->
+    <div id="sectionStandalone" style="display: none; flex-direction: column; gap: 16px;">
+      <div class="card">
+        <div class="card-title">Instant Mobile Capture</div>
+        <div class="actions-grid">
+          <div class="action-card" onclick="triggerVoiceCapture()">
+            <div class="action-icon">🎙️</div>
+            <div class="action-label" id="voiceLabel">Voice Note</div>
+          </div>
+          <div class="action-card" onclick="triggerCameraCapture()">
+            <div class="action-icon">📷</div>
+            <div class="action-label">Snap Doc / Receipt</div>
+          </div>
+        </div>
+        <input type="file" id="cameraInput" accept="image/*" capture="environment" style="display:none;" onchange="handlePhoto(event)">
+        <img id="photoPreview" alt="Capture preview" />
+
+        <div style="margin-top: 14px;">
+          <input type="text" id="quickNoteInput" class="input-field" placeholder="Dump idea, lead, or task..." onkeydown="if(event.key==='Enter') saveQuickNote()" />
+          <button class="btn btn-primary" onclick="saveQuickNote()">Save to Brain</button>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">
+          <span>Local Brain Queue</span>
+          <span id="queueCount" style="color: var(--muted);">0 items</span>
+        </div>
+        <div class="notes-list" id="notesList">
+          <div style="font-size: 12px; color: var(--dim); text-align: center; padding: 12px;">No un-synced captures</div>
+        </div>
+        <button class="btn btn-outline" style="margin-top: 10px;" onclick="syncQueue()">Sync to Desktop</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const DEFAULT_URL_KEY = 'founderos_desktop_url';
+    const QUEUE_KEY = 'founderos_mobile_queue';
+
+    let currentUrl = localStorage.getItem(DEFAULT_URL_KEY) || 'http://localhost:4100';
+    document.getElementById('desktopUrlInput').value = currentUrl;
+
+    function setMode(mode) {
+      const isCompanion = mode === 'companion';
+      document.getElementById('sectionCompanion').style.display = isCompanion ? 'block' : 'none';
+      document.getElementById('sectionStandalone').style.display = isCompanion ? 'none' : 'flex';
+      document.getElementById('tabCompanion').classList.toggle('active', isCompanion);
+      document.getElementById('tabStandalone').classList.toggle('active', !isCompanion);
+      document.getElementById('modeLabel').textContent = isCompanion ? 'Companion Mode' : 'Standalone Mode';
+      if (!isCompanion) renderQueue();
+    }
+
+    async function testConnection() {
+      const url = document.getElementById('desktopUrlInput').value.trim();
+      const badge = document.getElementById('connBadge');
+      const dot = document.getElementById('statusDot');
+      badge.textContent = 'CHECKING...';
+      badge.style.color = 'var(--muted)';
+
+      try {
+        const controller = new AbortController();
+        const id = setTimeout(() => controller.abort(), 4000);
+        const res = await fetch(`${url}/api/agents`, { signal: controller.signal });
+        clearTimeout(id);
+        if (res.ok || res.status === 404 || res.status === 200) {
+          badge.textContent = 'ONLINE';
+          badge.style.color = 'var(--accent)';
+          dot.style.background = 'var(--accent)';
+          localStorage.setItem(DEFAULT_URL_KEY, url);
+        } else {
+          throw new Error('Status ' + res.status);
+        }
+      } catch (err) {
+        badge.textContent = 'OFFLINE';
+        badge.style.color = '#ef4444';
+        dot.style.background = '#ef4444';
+      }
+    }
+
+    function connectToDesktop() {
+      const url = document.getElementById('desktopUrlInput').value.trim();
+      if (!url) return;
+      localStorage.setItem(DEFAULT_URL_KEY, url);
+      window.location.href = url;
+    }
+
+    // Voice Capture
+    let isRecording = false;
+    let recognition = null;
+
+    function triggerVoiceCapture() {
+      const label = document.getElementById('voiceLabel');
+      if (!('webkitSpeechRecognition' in window) && !('SpeechRecognition' in window)) {
+        const note = prompt('Enter dictated note:');
+        if (note) addCaptureItem({ type: 'voice-text', content: note });
+        return;
+      }
+
+      if (isRecording) {
+        if (recognition) recognition.stop();
+        isRecording = false;
+        label.textContent = 'Voice Note';
+        return;
+      }
+
+      const SpeechRec = window.SpeechRecognition || window.webkitSpeechRecognition;
+      recognition = new SpeechRec();
+      recognition.continuous = false;
+      recognition.interimResults = false;
+
+      recognition.onstart = () => {
+        isRecording = true;
+        label.textContent = 'Listening...';
+      };
+
+      recognition.onresult = (event) => {
+        const transcript = event.results[0][0].transcript;
+        addCaptureItem({ type: 'voice', content: transcript });
+        isRecording = false;
+        label.textContent = 'Voice Note';
+      };
+
+      recognition.onerror = () => {
+        isRecording = false;
+        label.textContent = 'Voice Note';
+      };
+
+      recognition.onend = () => {
+        isRecording = false;
+        label.textContent = 'Voice Note';
+      };
+
+      recognition.start();
+    }
+
+    // Camera Capture
+    function triggerCameraCapture() {
+      document.getElementById('cameraInput').click();
+    }
+
+    function handlePhoto(e) {
+      const file = e.target.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = (event) => {
+        const preview = document.getElementById('photoPreview');
+        preview.src = event.target.result;
+        preview.style.display = 'block';
+        addCaptureItem({ type: 'photo-doc', content: `Document captured: ${file.name} (${Math.round(file.size/1024)} KB)` });
+      };
+      reader.readAsDataURL(file);
+    }
+
+    function saveQuickNote() {
+      const input = document.getElementById('quickNoteInput');
+      const text = input.value.trim();
+      if (!text) return;
+      addCaptureItem({ type: 'note', content: text });
+      input.value = '';
+    }
+
+    function addCaptureItem(item) {
+      const queue = JSON.parse(localStorage.getItem(QUEUE_KEY) || '[]');
+      queue.unshift({
+        ...item,
+        id: Date.now().toString(),
+        timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+      });
+      localStorage.setItem(QUEUE_KEY, JSON.stringify(queue));
+      renderQueue();
+    }
+
+    function renderQueue() {
+      const queue = JSON.parse(localStorage.getItem(QUEUE_KEY) || '[]');
+      const container = document.getElementById('notesList');
+      const count = document.getElementById('queueCount');
+      count.textContent = `${queue.length} item${queue.length === 1 ? '' : 's'}`;
+
+      if (queue.length === 0) {
+        container.innerHTML = '<div style="font-size: 12px; color: var(--dim); text-align: center; padding: 12px;">No un-synced captures</div>';
+        return;
+      }
+
+      container.innerHTML = queue.map(q => `
+        <div class="note-item">
+          <div>
+            <span style="font-size: 11px; color: var(--muted); text-transform: uppercase;">[${q.type}]</span>
+            <div>${q.content}</div>
+          </div>
+          <span class="note-time">${q.timestamp}</span>
+        </div>
+      `).join('');
+    }
+
+    async function syncQueue() {
+      const queue = JSON.parse(localStorage.getItem(QUEUE_KEY) || '[]');
+      if (queue.length === 0) {
+        alert('Queue is empty!');
+        return;
+      }
+      const desktopUrl = localStorage.getItem(DEFAULT_URL_KEY) || 'http://localhost:4100';
+      try {
+        const res = await fetch(`${desktopUrl}/api/conductor/chat`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            message: `[Mobile Synced Items]:\n` + queue.map(i => `- ${i.type}: ${i.content}`).join('\n')
+          })
+        });
+        if (res.ok) {
+          localStorage.setItem(QUEUE_KEY, '[]');
+          renderQueue();
+          alert('Successfully synced captures to FounderOS brain!');
+        } else {
+          alert('Could not sync. Ensure Windows FounderOS server is reachable at ' + desktopUrl);
+        }
+      } catch (e) {
+        alert('Sync error: ' + e.message + '. Check network connection to desktop.');
+      }
+    }
+
+    // Auto-test on load
+    testConnection();
+  </script>
+</body>
+</html>

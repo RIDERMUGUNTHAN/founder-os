@@ -3343,3 +3343,25 @@ body[data-canvas='1'] .bh-skeleton {
 :root[data-theme='mono-light'] {
   --insight-base: color-mix(in oklab, var(--text) 90%, var(--brain-1));
 }
+
+/* ── Mobile & App Shell Responsive Rules ─────────────────────────── */
+@media (max-width: 768px) {
+  :root {
+    --sidebar-w: 0px !important;
+    --conductor-w: 0px !important;
+  }
+  .os-shell {
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    padding-bottom: 80px !important;
+  }
+  aside {
+    display: none !important;
+  }
+  main {
+    padding-left: 1rem !important;
+    padding-right: 1rem !important;
+    padding-top: 1rem !important;
+  }
+}
+

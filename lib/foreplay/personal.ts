@@ -8,14 +8,14 @@ import type { WallAd } from '@/lib/foreplay/wall';
  * similarity uses the mean emotional fingerprint of saved ads).
  */
 
-/** the operator's lanes: AI agents/automation, founder offers, creator education. */
+/** the operator's lanes: AI agents/automation, LEO offers, creator education. */
 export const NICHE_KEYWORDS = [
   'ai',
   'agent',
   'agents',
   'automation',
   'automate',
-  'founder',
+  'LEO',
   'business',
   'agency',
   'marketing',

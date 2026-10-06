@@ -1,20 +1,20 @@
-# Founder OS
+# LEO
 
 **A personal operating system for a one-person business: a live web command
 center that runs your company as a set of AI-assisted "departments."**
 
-Founder OS turns the tabs, tools, and mental overhead of running a solo business
+LEO turns the tabs, tools, and mental overhead of running a solo business
 into one screen: unified comms, a client funnel, social growth, finances, a
 knowledge graph, and a roster of named AI agents that each own a real job.
 
 This repository is the **open-source demo build**. It ships seeded with
 realistic placeholder data, so every page is alive out of the box with no
 accounts, no API keys, and nothing to configure. It's the same system taught,
-live, in the [Founder OS cohort](https://www.founderos.example.com); this repo lets
+live, in the [LEO cohort](https://www.LEOos.example.com); this repo lets
 you explore and run it yourself.
 
 > Want to build your own, live, with guidance? That's what the cohort is for.
-> [founderos.example.com](https://www.founderos.example.com)
+> [LEOos.example.com](https://www.LEOos.example.com)
 
 ---
 
@@ -234,5 +234,5 @@ MIT. See [`LICENSE`](LICENSE).
 
 ---
 
-Built as the reference implementation for **Founder OS**.
-[founderos.example.com](https://www.founderos.example.com)
+Built as the reference implementation for **LEO**.
+[LEOos.example.com](https://www.LEOos.example.com)

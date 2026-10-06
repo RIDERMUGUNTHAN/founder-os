@@ -93,7 +93,7 @@ export function positionSizes(positions: TradingPosition[]): Array<{ label: stri
 
 export type ActivityFilter = 'all' | 'agent' | 'you' | 'rejected';
 
-const isAgent = (a: TradeActivity) => /agent/i.test(a.agent) && !/alex/i.test(a.agent);
+const isAgent = (a: TradeActivity) => /agent/i.test(a.agent) && !/Rider/i.test(a.agent);
 
 /** Who did it and how it ended. "you" is anything a human placed, manual or
  *  override; "agent" is the Markets Agent whatever the outcome; "rejected" is

@@ -3,7 +3,7 @@ import type { SeriesPoint } from '@/components/slab-charts';
 import type { LeadMagnet } from '@/lib/schemas';
 
 /**
- * /content/lead-magnets in the Brand Deals look (Alex, 2026-09-24). One
+ * /content/lead-magnets in the Brand Deals look (Rider, 2026-09-24). One
  * pure pass over the lead_magnets rows the table renders gives the Magnet
  * Volume card (live pages, the live share and what each page captures, all
  * of the same whole), a cumulative pages-shipped line, the capture and

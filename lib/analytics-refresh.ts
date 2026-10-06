@@ -5,7 +5,7 @@
  * even when nobody loads the page). Each read degrades to null on failure —
  * a broken connector must never fake a value into the snapshot history.
  */
-import type { FounderDb } from '@/lib/db';
+import type { LEODb } from '@/lib/db';
 import { buildSocialDashboard, audienceGrowthPct } from '@/lib/social';
 import { attioStatus } from '@/lib/connectors/attio';
 import { wisprStatus } from '@/lib/connectors/wispr';
@@ -16,7 +16,7 @@ import { beehiivSubscribers } from '@/lib/connectors/beehiiv';
 import type { MetricInput } from '@/lib/operating-metrics';
 
 export async function gatherOperatingMetrics(
-  db: FounderDb,
+  db: LEODb,
 ): Promise<{ inputs: MetricInput[]; subs: number | null }> {
   const dash = buildSocialDashboard(db);
   const totalFollowers = dash.totalFollowers;

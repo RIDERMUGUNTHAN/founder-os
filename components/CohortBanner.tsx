@@ -12,7 +12,7 @@ export function CohortBanner() {
       <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
         <div className="min-w-0">
           <div className="page-eyebrow mb-1.5 flex items-center gap-2 font-mono text-[9.5px] uppercase tracking-[0.32em] text-os-dim">
-            FounderOS Cohort
+            LEO Cohort
           </div>
           <p className="max-w-[70ch] font-mono text-[11.5px] leading-relaxed text-os-muted">
             {COHORT_CTA}
@@ -24,7 +24,7 @@ export function CohortBanner() {
           rel="noreferrer"
           className="inline-flex shrink-0 items-center gap-1.5 self-start whitespace-nowrap rounded-sm-t border border-os-border-strong px-3 py-2 font-mono text-[10px] font-bold uppercase tracking-[0.18em] text-os-text transition-[background-color,border-color,color] duration-[var(--dur-press)] hover:border-os-accent hover:bg-os-surface2 sm:self-auto"
         >
-          founderos.example.com
+          LEO.example.com
           <ArrowUpRight className="h-3 w-3" />
         </a>
       </div>

@@ -212,7 +212,7 @@ export default async function ContentPage() {
         />
       </div>
 
-      {/* Three equal sections (Alex, 2026-08-13): the lead magnet index and
+      {/* Three equal sections (Rider, 2026-08-13): the lead magnet index and
           both Vantage intelligence surfaces, side by side. */}
       <SlabCard i={6} title="Content intelligence" sub="3 surfaces" className="mt-6">
         <div className="grid gap-3 px-6 pb-6 pt-4 md:grid-cols-3">

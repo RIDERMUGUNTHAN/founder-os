@@ -94,7 +94,7 @@ export function Toaster({ children }: { children: ReactNode }) {
             {t.ttl !== Infinity && (
               <span
                 className="absolute bottom-0 left-2 right-2 h-px origin-left opacity-50 transition-transform duration-200 ease-linear"
-                style={{ background: color(t.kind), transform: `scaleX(${t.held ? 1 : Math.max(0, 1 - (Date.now() - t.born) / t.ttl)})` }}
+                style={{ background: color(t.kind), transform: `scRider(${t.held ? 1 : Math.max(0, 1 - (Date.now() - t.born) / t.ttl)})` }}
               />
             )}
           </div>

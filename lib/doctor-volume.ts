@@ -7,7 +7,7 @@ import type { PillarAxis } from '@/lib/pillar-radar';
 const NOT_CHECKED = 'NOT CHECKED';
 
 /**
- * /doctor in the Brand Deals look (Alex, 2026-09-24). One pure pass over
+ * /doctor in the Brand Deals look (Rider, 2026-09-24). One pure pass over
  * the page's own real reads (the gbrain doctor, the brain-store walk, the
  * pillar radar axes and the data-agent's run history) produces every number
  * the slab shows: the Health Volume headline, chips and meters, the brain-run

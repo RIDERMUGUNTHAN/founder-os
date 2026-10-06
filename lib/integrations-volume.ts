@@ -5,7 +5,7 @@ import { connectKeysFor, type CatalogEntry } from '@/lib/integrations-catalog';
 import { INTEGRATION_CATEGORIES } from '@/lib/schemas';
 
 /**
- * /integrations in the Brand Deals look (Alex, 2026-09-24). One pure pass
+ * /integrations in the Brand Deals look (Rider, 2026-09-24). One pure pass
  * over the page's own rows (the live connector checks and the catalog merged
  * onto them) produces every number the slab shows: the Connection Volume
  * headline, chips and meters, connected tools by category, the connector

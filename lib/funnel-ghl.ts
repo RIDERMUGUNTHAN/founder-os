@@ -1,6 +1,6 @@
 /**
  * GoHighLevel provider — the Launchpad Cohort pipeline
- * (alex@launchpadcohort.example.com sub-account) mapped into the same
+ * (Rider@launchpadcohort.example.com sub-account) mapped into the same
  * FunnelJourney shape as Attio, so both CRMs share one space. Auth is a
  * Private Integration Token (Settings → Private Integrations, read scopes):
  * set GHL_API_KEY + GHL_LOCATION_ID in .env.local. Honest null when unkeyed

@@ -9,7 +9,7 @@ import type { BoardLivePayload } from '@/lib/board-live';
 const WINDOW_DAYS = 14;
 
 /**
- * The /agents slab hero (Alex, 2026-09-24: Brand Deals look OS-wide). Two
+ * The /agents slab hero (Rider, 2026-09-24: Brand Deals look OS-wide). Two
  * rows over the cockpit: run activity + the Agent Volume card, then runs by
  * seat, the open task lanes and the one "Needs you" card. It reads the same
  * snapshot BoardLive polls (via the board-live store), so the numbers here and

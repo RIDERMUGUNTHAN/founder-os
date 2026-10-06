@@ -233,7 +233,7 @@ export const DomainSchema = z.object({
 });
 
 // Persona = one variant of the platform configured for a different kind of
-// operator. Same skeleton as the creator-founder: pillars (departments) → the
+// operator. Same skeleton as the creator-LEO: pillars (departments) → the
 // agents that run them, the connectors they wire, the metrics they track, and
 // how they use the shared G-Brain.
 export const PersonaPillarSchema = z.object({
@@ -637,7 +637,7 @@ export const WorkflowStepSchema = z.object({
   title: z.string().min(1),
   detail: z.string().default(''), // full step description for the step-detail drawer
   ownerKind: WorkflowOwnerKindSchema,
-  owner: z.string().min(1), // "the operator · Founder" / "SDR Agent"
+  owner: z.string().min(1), // "the operator · LEO" / "SDR Agent"
   hoursPerWeek: z.number().nonnegative(),
   tools: z.array(z.string()), // tool slugs (same namespace as agents)
   edgeLabel: z.string().nullable(), // label on the edge INTO the next step

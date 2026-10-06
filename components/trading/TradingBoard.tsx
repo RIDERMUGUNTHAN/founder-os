@@ -2,7 +2,7 @@
 
 /**
  * Trading: the Robinhood accounts and the Phantom wallet as one slab in the
- * Brand Deals mould (Alex, 2026-09-18: "big and boxy, like the brand deals
+ * Brand Deals mould (Rider, 2026-09-18: "big and boxy, like the brand deals
  * tab as a model"). The page floats as one surface, numerals rule, data owns
  * the chroma (one hue per account), the sleeve's value line is the hero with
  * the agent's reasoning beside it, hatched meters for the accounts, a
@@ -497,7 +497,7 @@ export function TradingBoard({ initial }: { initial: TradingPayload }) {
               </div>
               <div className="mt-2.5 flex flex-wrap items-center gap-2">
                 <Badge tone={statusTone(selected.status)}>{selected.status}</Badge>
-                <Badge tone={/agent/i.test(selected.agent) && !/alex/i.test(selected.agent) ? 'ok' : 'default'} ghost>
+                <Badge tone={/agent/i.test(selected.agent) && !/Rider/i.test(selected.agent) ? 'ok' : 'default'} ghost>
                   {selected.agent}
                 </Badge>
                 <Badge tone="default" ghost>

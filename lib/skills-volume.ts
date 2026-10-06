@@ -5,7 +5,7 @@ import type { Skill } from '@/lib/schemas';
 import { shortLabels } from '@/lib/short-labels';
 
 /**
- * /skills in the Brand Deals look (Alex, 2026-09-24). Skills carry no
+ * /skills in the Brand Deals look (Rider, 2026-09-24). Skills carry no
  * dates, so nothing here draws a timeline it would have to invent: the slab
  * shows the catalog's shape instead. One pure pass over the page's own rows
  * (the ~/.claude user + plugin skills and the operator skills table) gives the

@@ -101,7 +101,7 @@ export interface Hierarchy {
 
 export const ROUTER_DEPARTMENTS = 'router-departments';
 export const ENGINE_ID = 'model-claude-engine';
-export const APP_ID = 'k-founder';
+export const APP_ID = 'k-LEO';
 export const CLOUD_ID = 'k-cloud';
 
 export const KIND_LABEL: Record<HKind, string> = {
@@ -260,7 +260,7 @@ export function buildHierarchy(graph: BlueprintGraph): Hierarchy {
       type: 'container',
       id: APP_ID,
       kind: 'app',
-      name: 'Founder OS',
+      name: 'LEO',
       sub: 'the running OS · the Conductor commands agents · agents belong to departments · agents use tools',
       icon: 'layout-dashboard',
       rows: appRows,

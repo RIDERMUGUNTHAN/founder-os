@@ -6,7 +6,7 @@ import { dailySeries } from '@/lib/pulse-history';
 import { shortLabels } from '@/lib/short-labels';
 
 /**
- * /agents in the Brand Deals look (Alex, 2026-09-24). One pure pass over
+ * /agents in the Brand Deals look (Rider, 2026-09-24). One pure pass over
  * the live Paperclip payload BoardLive already polls produces every number the
  * slab shows: the Agent Volume headline, chips and meters, the run-activity
  * step line, runs by seat, the open task lanes and the single "Needs you"

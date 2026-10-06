@@ -4,9 +4,9 @@ import { paperclipCockpitThread, postCockpitMessage } from '@/lib/connectors/pap
 export const dynamic = 'force-dynamic';
 
 /**
- * The REAL Conductor chat — the panel talks to the board's CEO (Claude Fable 5
- * with its persistent session) through the standing "Founder OS Cockpit" issue.
- * Async by nature: POST wakes the Conductor; GET polls the thread for replies.
+ * The REAL Conductor chat — the panel talks to LEO's Conductor (the super-agent
+ * with its persistent session) through the standing "LEO Cockpit" issue.
+ * Rider is the sole operator. Async by nature: POST wakes the Conductor; GET polls the thread for replies.
  */
 export async function GET() {
   return NextResponse.json({ messages: await paperclipCockpitThread(50) });

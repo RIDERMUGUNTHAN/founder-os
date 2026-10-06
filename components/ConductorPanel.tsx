@@ -37,7 +37,7 @@ type ScreenCtx = {
 /** Cross-component open signal — the Topbar agent icon fires this. */
 export const CONDUCTOR_OPEN_EVENT = 'conductor:open';
 
-const WIDTH_KEY = 'founder-conductor-w';
+const WIDTH_KEY = 'LEO-conductor-w';
 const MIN_W = 300;
 const MAX_W = 760;
 const clampW = (w: number) => Math.min(MAX_W, Math.max(MIN_W, Math.round(w)));
@@ -47,9 +47,10 @@ const clampW = (w: number) => Math.min(MAX_W, Math.max(MIN_W, Math.round(w)));
  * per-screen set (and if the board is unreachable it never does).
  */
 const QUICK_ACTIONS = [
-  { label: 'What needs me?', prompt: 'What needs my attention right now across the OS?' },
-  { label: 'Board status', prompt: 'Give me the current board status: what is running, blocked, and done today.' },
-  { label: "Today's digest", prompt: 'Summarize today: comms, agents, money, anything unusual.' },
+  { label: "Jarvis, status report", prompt: "Give me a full status report: system health, agents running, social queue, any alerts or issues I need to know about right now." },
+  { label: "What needs me?", prompt: "What needs Rider's attention right now across LEO? Prioritize by urgency — calls, DMs, money, agents that failed." },
+  { label: "Social queue", prompt: "What social content is queued for today? Summarize posts ready to publish on Instagram, X, and YouTube." },
+  { label: "Today's digest", prompt: "Full morning briefing: comms, agents, Stripe revenue, social activity, any open tasks or alerts — everything I need to start the day." },
 ] as const;
 
 export function ConductorPanel() {
@@ -117,6 +118,20 @@ export function ConductorPanel() {
   }, [open, width]);
   const [ctx, setCtx] = useState<ScreenCtx | null>(null);
   const [turns, setTurns] = useState<Turn[]>([]);
+  const [voiceMode, setVoiceMode] = useState(false);
+
+  useEffect(() => {
+    if (!open || !voiceMode) return;
+    const lastMsg = turns[turns.length - 1];
+    if (lastMsg && lastMsg.role === 'assistant') {
+      if ('speechSynthesis' in window) {
+        window.speechSynthesis.cancel();
+        // Read clean text, removing markdown symbols if simple
+        const utterance = new SpeechSynthesisUtterance(lastMsg.content.replace(/[\*\_#]/g, ''));
+        window.speechSynthesis.speak(utterance);
+      }
+    }
+  }, [turns, open, voiceMode]);
   const [awaiting, setAwaiting] = useState(false);
   const awaitingRef = useRef(false);
   awaitingRef.current = awaiting;
@@ -355,6 +370,24 @@ export function ConductorPanel() {
             className="pressable is-dark shrink-0 rounded-ctl px-1.5 py-1 font-mono text-[9px] uppercase tracking-wider text-os-dim"
           >
             clear
+          </button>
+          <button
+            data-lens="c"
+            onClick={() => {
+              const nextVoice = !voiceMode;
+              if (!nextVoice && 'speechSynthesis' in window) {
+                window.speechSynthesis.cancel();
+              } else if (nextVoice && 'speechSynthesis' in window) {
+                const utterance = new SpeechSynthesisUtterance("Voice mode activated. I am online and ready, Rider.");
+                window.speechSynthesis.speak(utterance);
+              }
+              setVoiceMode(nextVoice);
+            }}
+            aria-label="Toggle Voice Mode"
+            title="Toggle Voice Mode (Jarvis)"
+            className={`pressable shrink-0 rounded-ctl px-1.5 py-1 font-mono text-[9px] uppercase tracking-wider ${voiceMode ? 'text-os-accent border border-os-accent' : 'text-os-dim border border-transparent is-dark'}`}
+          >
+            {voiceMode ? 'VOICE: ON' : 'VOICE: OFF'}
           </button>
           <button
             data-lens="c"

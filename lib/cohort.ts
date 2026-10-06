@@ -1,5 +1,5 @@
 /**
- * FounderOS cohort invite — the demo's one growth surface.
+ * LEO cohort invite — the demo's one growth surface.
  *
  * Two placements share this module so the copy and the URL can never drift:
  *  - `CohortModal`  — a one-time welcome pop-up on the home screen, the first
@@ -8,14 +8,14 @@
  */
 
 /** Where both placements send people. */
-export const COHORT_URL = 'https://founderos.example.com';
+export const COHORT_URL = 'https://LEO.example.com';
 
 /** The line that sits at the bottom of every page. */
 export const COHORT_CTA =
-  'Want help setting this up? Go to the FounderOS cohort to learn how to build the entire thing end-to-end and get it into production.';
+  'Want help setting this up? Go to the LEO cohort to learn how to build the entire thing end-to-end and get it into production.';
 
 /** localStorage flag — set once the welcome pop-up has been dismissed. */
-export const COHORT_STORAGE_KEY = 'founderos-cohort-invite';
+export const COHORT_STORAGE_KEY = 'LEO-cohort-invite';
 
 /** Value written on dismissal (any non-null value suppresses the pop-up). */
 export const COHORT_SEEN = 'seen';

@@ -39,7 +39,7 @@ async function clientRoster(db: ReturnType<typeof getDb>): Promise<RosterClient[
 // The G-Brain tab is now a single, uncluttered view: just the knowledge
 // graph, sized to fill the screen with no scroll. Health readouts (pillar
 // health, doctor, storage, pipeline, query path) live on the Doctor tab.
-/** dept id → the board lead's agent name (the seats Alex created on Paperclip) */
+/** dept id → the board lead's agent name (the seats Rider created on Paperclip) */
 const BOARD_LEAD_NAMES: Record<string, string> = {
   'dept-sales': 'Sales',
   'dept-marketing-growth': 'Marketing/Growth',
@@ -99,7 +99,7 @@ export default async function BrainPage() {
       />
 
       {/* pull the graph up under the header (offsets PageHeader's shared mb-6)
-          so the brain-dump sits close to the graph — maximize page space (Alex) */}
+          so the brain-dump sits close to the graph — maximize page space (Rider) */}
       <Rise i={1} className="relative -mt-3 min-h-0 flex-1">
         <BrainGraphView
           fill
