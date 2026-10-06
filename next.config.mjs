@@ -1,8 +1,11 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   poweredByHeader: false,
-  // Disable file tracing to avoid Windows junction point issues
-  outputFileTracing: false,
+  // Standalone output (required by Dockerfile). File tracing is disabled only on Windows
+  // to avoid junction point issues.
+  ...(process.platform === 'win32'
+    ? { outputFileTracing: false }
+    : { output: 'standalone' }),
   distDir: process.env.NEXT_DIST_DIR || '.next',
   experimental: {
     instrumentationHook: true,
